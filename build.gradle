@@ -1,0 +1,65 @@
+
+allprojects {
+  ext.scalaVersion = "2.9.2"
+  apply plugin: "eclipse"
+
+  task projects(dependsOn:["cleanEclipse","eclipseProject","eclipseClasspath"]) << {
+  }
+
+  task wrapper(type: Wrapper) {
+	  gradleVersion = "1.3"
+  }
+
+  eclipse {
+      classpath {
+         downloadSources=true
+         downloadJavadocs=true
+      }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+  }
+}
+
+defaultTasks "installApp"
+
+apply plugin: "groovy"
+apply plugin: "application"
+
+mainClassName = "service.Main"
+
+sourceSets {
+	main {
+		groovy {
+			srcDirs = ["src"]
+		}
+	}
+}
+
+dependencies {
+  compile project(":kernel")
+  compile localGroovy()
+}
+
+applicationDistribution.from("$projectDir/app") {
+	into "app"
+}
+
+applicationDistribution.from("$projectDir/build/assets") {
+	into "app/assets"
+}
+
+applicationDistribution.from("$projectDir/install") {
+	into "install"
+}
+
+applicationDistribution.from("$projectDir/config/common") {
+}
+
+applicationDistribution.from("$projectDir/config/deploy") {
+}
+

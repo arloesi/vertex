@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+groovy.compiler.level=20
+groovy.script.filters=**/*.dsld,n,scripts/**/*.groovy,n,src/main/resources/**/*.groovy,n,src/test/resources/**/*.groovy,n
+groovy.script.filters.enabled=true

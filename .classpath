@@ -4,5 +4,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
 	<classpathentry kind="src" path="/kernel" exported="true"/>
-	<classpathentry kind="lib" path="/usr/local/gradle-1.3/lib/groovy-all-1.8.6.jar" exported="true"/>
+	<classpathentry sourcepath="/Users/david/.gradle/caches/artifacts-15/filestore/org.codehaus.groovy/groovy-all/2.1.2/source/221e602485db406831390626423e16d0fccbd8cb/groovy-all-2.1.2-sources.jar" kind="lib" path="/Users/david/.gradle/caches/artifacts-15/filestore/org.codehaus.groovy/groovy-all/2.1.2/jar/ab1bf16086fc19709b3ca335bc4eafaedc742dc0/groovy-all-2.1.2.jar" exported="true"/>
 </classpath>

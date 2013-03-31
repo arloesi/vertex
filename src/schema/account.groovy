@@ -1,7 +1,10 @@
 package schema
 
-import kernel.content.*
+import groovy.transform.*
+import javax.persistence.*
 
-public class Account extends Entity {
-
+@Entity
+@CompileStatic
+public class Account {
+  String name
 }

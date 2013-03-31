@@ -30,7 +30,7 @@ defaultTasks "installApp"
 apply plugin: "groovy"
 apply plugin: "application"
 
-mainClassName = "service.Main"
+mainClassName = "service.Runtime"
 
 sourceSets {
 	main {
@@ -42,24 +42,12 @@ sourceSets {
 
 dependencies {
   compile project(":kernel")
-  compile localGroovy()
+  groovy "org.codehaus.groovy:groovy-all:2.1.2"
 }
 
 applicationDistribution.from("$projectDir/app") {
 	into "app"
 }
 
-applicationDistribution.from("$projectDir/build/assets") {
-	into "app/assets"
-}
 
-applicationDistribution.from("$projectDir/install") {
-	into "install"
-}
-
-applicationDistribution.from("$projectDir/config/common") {
-}
-
-applicationDistribution.from("$projectDir/config/deploy") {
-}
 

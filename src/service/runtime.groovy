@@ -1,6 +1,6 @@
 package service
 
-class Main {
+class Runtime {
 	static main(args) {
 		println("Hello World!")
 	}

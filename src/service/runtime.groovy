@@ -1,33 +1,29 @@
 package service
 
-import org.hibernate.cfg.*
+import org.springframework.context.support.*
+import org.hibernate.*
+
+import kernel.source.*
 import schema.Account
 
 class Runtime {
-	static main(args) {
-    def properties = [
-      "hibernate.dialect":"org.hibernate.dialect.DerbyDialect",
-      "hibernate.connection.driver_class":"org.apache.derby.jdbc.EmbeddedDriver",
-      "hibernate.connection.url":"jdbc:derby:.data/content;create=true",
-      "hibernate.hbm2ddl.auto":"create-drop",
-      "hibernate.show_sql":"true"]
+  static main(args) {
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+    Schema schema = context.getBean("vertex.schema");
 
-    def config = new Configuration()
-    properties.each { k, v -> config.setProperty(k, v) }
-    config.addAnnotatedClass(Account)
+    Session session = schema.openSession();
+    session.beginTransaction();
 
-    def factory = config.buildSessionFactory()
+    Account account = new Account(name:"My Account");
+    session.save(account);
+    session.getTransaction().commit();
+    session.close();
 
-    def session = factory.openSession()
-    session.beginTransaction()
-    session.save(new Account(name:"My Account"))
-    session.transaction.commit()
-    session.close()
+    session = schema.openSession();
+    account = session.createQuery("from Account").uniqueResult();
 
-    session = factory.openSession()
-    def account = session.createQuery("from Account").uniqueResult()
+    session.close();
 
-		println("account: "+account.name)
-    session.close()
-	}
+    println("account: "+account.name)
+  }
 }

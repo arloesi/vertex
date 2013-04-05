@@ -35,9 +35,15 @@ mainClassName = "service.Runtime"
 sourceSets {
 	main {
 		groovy {
-			srcDirs = ["src"]
+			srcDirs = ["src/main"]
 		}
 	}
+
+  test {
+    groovy {
+      srcDirs = ["src/test"]
+    }
+  }
 }
 
 dependencies {

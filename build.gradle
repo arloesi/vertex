@@ -1,6 +1,10 @@
 
 allprojects {
-  ext.scalaVersion = "2.9.2"
+  ext {
+    scalaVersion = "2.9.3"
+    testVersion = "2.0.M5b"
+  }
+
   apply plugin: "eclipse"
 
   task projects(dependsOn:["cleanEclipse","eclipseProject","eclipseClasspath"]) << {

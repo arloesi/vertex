@@ -10,9 +10,9 @@ allprojects {
   task projects(dependsOn:["cleanEclipse","eclipseProject","eclipseClasspath"]) << {
   }
 
-  task wrapper(type: Wrapper) {
+  /*task wrapper(type: Wrapper) {
 	  gradleVersion = "1.3"
-  }
+  }*/
 
   eclipse {
       classpath {
@@ -23,6 +23,10 @@ allprojects {
 
   repositories {
     mavenCentral()
+
+    maven {
+      url "http://download.eclipse.org/rt/eclipselink/maven.repo"
+    }
   }
 
   dependencies {

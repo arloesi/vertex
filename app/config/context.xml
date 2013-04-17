@@ -3,7 +3,7 @@
 <beans
   xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-  <bean id="vertex.schema" class="kernel.source.Schema">
+  <bean id="vertex.schema" class="kernel.schema.Schema">
     <constructor-arg>
       <props>
         <prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
@@ -15,7 +15,7 @@
     </constructor-arg>
     <constructor-arg>
       <list>
-        <value>schema.Account</value>
+        <value>kernel.Schema$Entity</value>
       </list>
     </constructor-arg>
   </bean>

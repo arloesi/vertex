@@ -17,10 +17,11 @@ master
   heading: "Main Page"
   content: ->
     div ->
-      menu model:"menu",layout:"left.horizontal"
+      div "table.fill-horizontal", ->
+        div ->
+          h1 "Financials"
+          menu model:"menu",layout:"right.horizontal"
 
       div "#content", ->
-        div "#home", ->
-          p "Home"
-
-        div "#inventory", inventory
+        div "#home", -> p "Home"
+        div "#inventory", "data-bind":"with:newInventory()", inventory

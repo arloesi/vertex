@@ -4,7 +4,9 @@ model = (i) -> models.push i
 
 model ->
   class this.Menu
-    constructor: (menu,container,items) ->
+    constructor: ({menu,container,items,target}) ->
+      target ?= items[0].target
+
       self = this
 
       this.id = menu
@@ -23,7 +25,7 @@ model ->
         $("#"+container+" > ##{i.target}").show()
 
       this.complete = ->
-        self.show items[0]
+        self.show target
 
 menu = ({id,layout,items,container,model,format}) ->
   model ?= "new Menu('#{id}','#{container}',#{items})"

@@ -4,7 +4,11 @@ model ->
     constructor: ->
       self = this
 
-      this.menu = new Menu "menu","content",[{title:"Home",target:"home"},{title:"Inventory",target:"inventory"}]
+      this.menu = new Menu
+        menu: "menu"
+        container: "content"
+        target: "inventory"
+        items: [{title:"Home",target:"home"},{title:"Inventory",target:"inventory"}]
 
       this.complete = ->
         self.menu.show "inventory"
@@ -12,7 +16,7 @@ model ->
 master
   heading: "Main Page"
   content: ->
-    div "data-bind":"init:complete", ->
+    div ->
       menu model:"menu",layout:"left.horizontal"
 
       div "#content", ->

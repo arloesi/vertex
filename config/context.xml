@@ -28,4 +28,16 @@
       </list>
     </constructor-arg>
   </bean>
+
+  <bean id="kernel.schema" class="kernel.schema.Schema">
+    <constructor-arg value="kernel.schema"/>
+    <constructor-arg>
+      <props>
+        <prop key="javax.persistence.jdbc.driver">org.apache.derby.jdbc.EmbeddedDriver</prop>
+        <prop key="javax.persistence.jdbc.url">jdbc:derby:.data/test/content;create=true</prop>
+        <prop key="eclipselink.ddl-generation">drop-and-create-tables</prop>
+        <prop key="eclipselink.ddl-generation.output-mode">database</prop>
+      </props>
+    </constructor-arg>
+  </bean>
 </beans>

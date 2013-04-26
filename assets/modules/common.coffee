@@ -1,6 +1,6 @@
 
 common =
-  styles: ["layout"]
+  styles: ["layout","common"]
   scripts:
     ["library/jquery-ui/js/jquery","library/jquery-ui/js/jquery-ui"
     ,"library/scripts/sockjs","library/scripts/cookie","library/scripts/date"

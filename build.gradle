@@ -7,15 +7,20 @@ allprojects {
     junitVersion = "4.11"
 
     compile = { dir, f, src, trg, command, arguments ->
-      task("$dir/$f"+".$trg",type:Exec) {
-        inputs.file file("$dir/$f"+".$src")
-        outputs.dir file("build/$dir/$f"+".$trg")
+      task("$dir/${f}.$trg",type:Exec) {
+        inputs.file file("$projectDir/$dir/${f}.$src")
+        outputs.dir file("$projectDir/build/$dir/${f}.$trg")
 
         environment << System.getenv()
         commandLine command
         args arguments
 
         standardOutput = new ByteArrayOutputStream()
+
+        doFirst {
+          def file = new File("$projectDir/build/$dir")
+          file.mkdirs()
+        }
 
         doLast {
           println standardOutput.toString()
@@ -24,11 +29,11 @@ allprojects {
     }
 
     less = { dir, file ->
-      compile(dir,file,"less","css","lessc",["$dir/${file}.less","build/$dir/${file}.css"])
+      compile(dir,file,"less","css","lessc",["$dir/${file}.less","$projectDir/build/$dir/${file}.css"])
     }
 
     coffee = { dir, file ->
-      compile(dir,file,"coffee","js","coffee",["-o","build/$dir","-c","$dir/${file}.coffee"])
+      compile(dir,file,"coffee","js","coffee",["-o","$projectDir/build/$dir","-c","$dir/${file}.coffee"])
     }
 
     markup = { target, source ->

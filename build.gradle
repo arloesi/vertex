@@ -41,7 +41,7 @@ allprojects {
         ext.sources = ["../kernel/assets/scripts/template.coffee",source].flatten()
 
         inputs.files sources.collect { i -> file(i) }
-        outputs.file file("build/$target")
+        outputs.file file("$projectDir/build/$target")
 
         def stdin = new SequenceInputStream(
           Collections.enumeration(
@@ -57,7 +57,7 @@ allprojects {
         }
 
         doLast {
-          def file = new File("build/$target")
+          def file = new File("$projectDir/build/$target")
           file.parentFile.mkdirs()
           file.withWriter { i -> i.println(stdout.toString()) }
         }
@@ -69,10 +69,6 @@ allprojects {
 
   task projects(dependsOn:["cleanEclipse","eclipseProject","eclipseClasspath"]) << {
   }
-
-  /*task wrapper(type: Wrapper) {
-	  gradleVersion = "1.3"
-  }*/
 
   eclipse {
       classpath {
@@ -116,6 +112,14 @@ dependencies {
   compile project(":kernel")
   scalaTools group:"org.scala-lang", name:"scala-compiler", version:ext.scalaVersion
   compile group:"org.scala-lang", name:"scala-library", version:ext.scalaVersion
+}
+
+markup "assets/modules/main.html", ["$projectDir/assets/modules/main.coffee"]
+
+task assets(dependsOn:[":kernel:assets"])
+
+assets.dependsOn {
+  tasks.findAll { task -> task.name.startsWith("assets/") }
 }
 
 applicationDistribution.from("$projectDir/app") {

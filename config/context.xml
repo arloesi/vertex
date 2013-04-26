@@ -15,8 +15,12 @@
     <constructor-arg>
       <list>
         <bean class="kernel.runtime.Handler">
+          <property name="location" value="/static/"/>
+          <property name="method" value="get"/>
+        </bean>
+        <bean class="kernel.runtime.Handler">
           <property name="location" value="/"/>
-          <property name="prefix" value="modules"/>
+          <property name="prefix" value="modules/"/>
           <property name="suffix" value=".html"/>
           <property name="command" value="gradle --daemon assets"/>
           <property name="method" value="get"/>

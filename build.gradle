@@ -3,6 +3,8 @@ allprojects {
   ext {
     scalaVersion = "2.9.3"
     testVersion = "2.0.M5b"
+    groovyVersion = "2.1.2"
+    junitVersion = "4.11"
   }
 
   apply plugin: "eclipse"
@@ -17,7 +19,7 @@ allprojects {
   eclipse {
       classpath {
          downloadSources=true
-         downloadJavadocs=true
+         downloadJavadoc=true
       }
   }
 
@@ -35,20 +37,20 @@ allprojects {
 
 defaultTasks "installApp"
 
-apply plugin: "groovy"
+apply plugin: "scala"
 apply plugin: "application"
 
 mainClassName = "service.Runtime"
 
 sourceSets {
 	main {
-		groovy {
+		scala {
 			srcDirs = ["src/main"]
 		}
 	}
 
   test {
-    groovy {
+    scala {
       srcDirs = ["src/test"]
     }
   }
@@ -56,7 +58,8 @@ sourceSets {
 
 dependencies {
   compile project(":kernel")
-  groovy "org.codehaus.groovy:groovy-all:2.1.2"
+  scalaTools group:"org.scala-lang", name:"scala-compiler", version:ext.scalaVersion
+  compile group:"org.scala-lang", name:"scala-library", version:ext.scalaVersion
 }
 
 applicationDistribution.from("$projectDir/app") {

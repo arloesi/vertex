@@ -114,9 +114,14 @@ dependencies {
   compile group:"org.scala-lang", name:"scala-library", version:ext.scalaVersion
 }
 
-["main"].each { i ->
+ext.module = { i, x ->
   markup "assets/modules/${i}.html",
-    ["$projectDir/assets/modules/common.coffee","$projectDir/assets/modules/${i}.coffee"] }
+    ["$projectDir/assets/modules/common.coffee"]+
+    x.collect { m -> "$projectDir/assets/modules/${m}.coffee" }+
+    ["$projectDir/assets/modules/${i}.coffee"]
+}
+
+module("main",["inventory"])
 
 task assets(dependsOn:[":kernel:assets"])
 

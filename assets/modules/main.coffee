@@ -4,10 +4,10 @@ model ->
     constructor: ->
       self = this
 
-      this.menu = new Menu "menu","content",[{title:"Home",target:"home"},{title:"Search",target:"search"}]
+      this.menu = new Menu "menu","content",[{title:"Home",target:"home"},{title:"Inventory",target:"inventory"}]
 
       this.complete = ->
-        self.menu.show "home"
+        self.menu.show "inventory"
 
 master
   heading: "Main Page"
@@ -19,5 +19,4 @@ master
         div "#home", ->
           p "Home"
 
-        div "#search", ->
-          p "Search"
+        div "#inventory", inventory

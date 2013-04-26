@@ -1,0 +1,3 @@
+
+inventory = ->
+  p "My Inventory"

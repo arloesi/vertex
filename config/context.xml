@@ -3,6 +3,29 @@
 <beans
   xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="vertex.schema" class="kernel.schema.Schema">
+    <constructor-arg value="vertex.schema"/>
+    <constructor-arg>
+      <props>
+        <prop key="javax.persistence.jdbc.driver">org.apache.derby.jdbc.EmbeddedDriver</prop>
+        <prop key="javax.persistence.jdbc.url">jdbc:derby:.data/test/content;create=true</prop>
+        <prop key="eclipselink.ddl-generation">drop-and-create-tables</prop>
+        <prop key="eclipselink.ddl-generation.output-mode">database</prop>
+      </props>
+    </constructor-arg>
+  </bean>
+
+  <bean id="vertex.mapper" class="kernel.schema.Mapper">
+    <constructor-arg ref="vertex.schema"/>
+    <constructor-arg>
+      <list>
+        <value>schema.Views$SIMPLE</value>
+        <value>schema.Views$DETAIL</value>
+      </list>
+    </constructor-arg>
+  </bean>
+
   <bean id="kernel.runtime.verticles" class="java.util.ArrayList">
     <constructor-arg>
       <list>
@@ -25,19 +48,13 @@
           <property name="command" value="gradle --daemon assets"/>
           <property name="method" value="get"/>
         </bean>
+        <bean class="kernel.schema.Handler">
+          <constructor-arg ref="vertex.schema"/>
+          <constructor-arg ref="vertex.mapper"/>
+          <property name="location" value="/content"/>
+          <property name="method" value="get|put|post|delete"/>
+        </bean>
       </list>
-    </constructor-arg>
-  </bean>
-
-  <bean id="kernel.schema" class="kernel.schema.Schema">
-    <constructor-arg value="kernel.schema"/>
-    <constructor-arg>
-      <props>
-        <prop key="javax.persistence.jdbc.driver">org.apache.derby.jdbc.EmbeddedDriver</prop>
-        <prop key="javax.persistence.jdbc.url">jdbc:derby:.data/test/content;create=true</prop>
-        <prop key="eclipselink.ddl-generation">drop-and-create-tables</prop>
-        <prop key="eclipselink.ddl-generation.output-mode">database</prop>
-      </props>
     </constructor-arg>
   </bean>
 </beans>

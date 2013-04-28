@@ -4,8 +4,6 @@
   version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="vertex.schema" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>schema.Asset</class>
-    <class>schema.Category</class>
-    <class>schema.Inventory</class>
+    <class>schema.Account</class>
   </persistence-unit>
 </persistence>

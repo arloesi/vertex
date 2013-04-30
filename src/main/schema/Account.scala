@@ -20,6 +20,6 @@ class Account() {
   var name:String = _
 
   @XmlElement
-  @Property(view=classOf[Views.GLOBAL])
+  @Property(view=classOf[Views.DETAIL])
   var display:String = _
 }

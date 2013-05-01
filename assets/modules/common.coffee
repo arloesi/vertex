@@ -43,7 +43,7 @@ common =
     ,"library/scripts/sockjs","library/scripts/cookie","library/scripts/date"
     ,"library/scripts/underscore","library/scripts/backbone"
     ,"library/scripts/knockout","library/scripts/knockback"
-    ,"scripts/kernel","scripts/binding"]
+    ,"scripts/kernel","scripts/service","scripts/binding"]
 
 master = ({content,heading,model})->
   model ?= "Model"
@@ -57,6 +57,8 @@ master = ({content,heading,model})->
 
         for i in common.styles
           link rel:"stylesheet", href:"/static/styles/#{i}.css"
+
+        script type:"text/javascript", src:"/socket-meta"
 
         for i in common.scripts
           script type:"text/javascript", src:"/static/#{i}.js"

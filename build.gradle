@@ -35,6 +35,10 @@ allprojects {
 
   repositories {
     mavenCentral()
+
+    maven {
+      url "http://download.eclipse.org/rt/eclipselink/maven.repo"
+    }
   }
 }
 

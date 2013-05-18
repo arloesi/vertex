@@ -1,71 +1,27 @@
 
+buildscript {
+  repositories {
+    mavenCentral()
+
+    maven {
+      url "file://Users/david/Workspaces/Vertex/maven"
+    }
+  }
+
+  dependencies {
+    classpath group:"arloesi",name:"assets",version:"0.1"
+  }
+}
+
 allprojects {
+  apply plugin: "eclipse"
+
   ext {
     scalaVersion = "2.9.3"
     testVersion = "2.0.M5b"
     groovyVersion = "2.1.2"
     junitVersion = "4.11"
-
-    compile = { dir, f, src, trg, command, arguments ->
-      task("$dir/${f}.$trg",type:Exec) {
-        inputs.file file("$projectDir/$dir/${f}.$src")
-        outputs.dir file("$projectDir/build/$dir/${f}.$trg")
-
-        environment << System.getenv()
-        commandLine command
-        args arguments
-
-        standardOutput = new ByteArrayOutputStream()
-
-        doFirst {
-          def file = new File("$projectDir/build/$dir")
-          file.mkdirs()
-        }
-
-        doLast {
-          println standardOutput.toString()
-        }
-      }
-    }
-
-    less = { dir, file ->
-      compile(dir,file,"less","css","lessc",["$dir/${file}.less","$projectDir/build/$dir/${file}.css"])
-    }
-
-    coffee = { dir, file ->
-      compile(dir,file,"coffee","js","coffee",["-o","$projectDir/build/$dir","-c","$dir/${file}.coffee"])
-    }
-
-    markup = { target, source ->
-      task(target) {
-        ext.sources = ["../kernel/assets/scripts/template.coffee",source].flatten()
-
-        inputs.files sources.collect { i -> file(i) }
-        outputs.file file("$projectDir/build/$target")
-
-        def stdin = new SequenceInputStream(
-          Collections.enumeration(
-            sources.collect { i -> new FileInputStream(new File(i))}))
-
-        def stdout = new ByteArrayOutputStream()
-
-        exec {
-            commandLine "coffee", "-s"
-            standardInput = stdin
-            standardOutput = stdout
-            environment << System.getenv()
-        }
-
-        doLast {
-          def file = new File("$projectDir/build/$target")
-          file.parentFile.mkdirs()
-          file.withWriter { i -> i.println(stdout.toString()) }
-        }
-      }
-    }
   }
-
-  apply plugin: "eclipse"
 
   task projects(dependsOn:["cleanEclipse","eclipseProject","eclipseClasspath"]) << {
   }
@@ -79,19 +35,13 @@ allprojects {
 
   repositories {
     mavenCentral()
-
-    maven {
-      url "http://download.eclipse.org/rt/eclipselink/maven.repo"
-    }
-  }
-
-  dependencies {
   }
 }
 
 defaultTasks "installApp"
 
 apply plugin: "scala"
+apply plugin: "assets"
 apply plugin: "application"
 
 sourceSets {
@@ -114,24 +64,18 @@ dependencies {
   compile group:"org.scala-lang", name:"scala-library", version:ext.scalaVersion
 }
 
-ext.module = { i, x ->
-  markup "assets/modules/${i}.html",
-    ["$projectDir/assets/modules/common.coffee"]+
-    x.collect { m -> "$projectDir/assets/modules/${m}.coffee" }+
-    ["$projectDir/assets/modules/${i}.coffee"]
+assets {
+  optimize false
 }
 
-module("main",["inventory"])
-
-task assets(dependsOn:[":kernel:assets"])
-
-assets.dependsOn {
-  tasks.findAll { task -> task.name.startsWith("assets/") }
+applicationDistribution.from("$buildDir/assets") {
+	into "assets"
 }
 
-applicationDistribution.from("$projectDir/app") {
-	into "app"
+applicationDistribution.from("$buildDir/modules") {
+  into "modules"
 }
+
 
 
 

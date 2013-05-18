@@ -1,0 +1,19 @@
+include = ["../kernel"]
+
+bundles {
+  common {
+    include= ["kernel"]
+    modules= ["common"]
+    styles = ["assets/styles/common.less"]
+    scripts= ["assets/scripts/common.coffee"]
+    images = ["assets/images"]
+  }
+}
+
+modules {
+  node {
+    include = ["kernel","common"]
+    scripts = ["assets/scripts/node.coffee"]
+    styles = ["assets/styles/node.less"]
+  }
+}

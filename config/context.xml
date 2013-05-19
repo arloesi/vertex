@@ -4,7 +4,7 @@
   xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="vertex.schema" class="kernel.schema.Schema">
+  <bean id="kernel.schema.schema" class="kernel.schema.Schema">
     <constructor-arg value="vertex.schema"/>
     <constructor-arg>
       <props>
@@ -16,13 +16,23 @@
     </constructor-arg>
   </bean>
 
-  <bean id="vertex.mapper" class="kernel.schema.Mapper">
-    <constructor-arg ref="vertex.schema"/>
+  <bean id="kernel.schema.mapper" class="kernel.schema.Mapper">
+    <constructor-arg ref="kernel.schema.schema"/>
+    <constructor-arg>
+      <props>
+      </props>
+    </constructor-arg>
     <constructor-arg>
       <list>
         <value>schema.Views$SIMPLE</value>
         <value>schema.Views$DETAIL</value>
       </list>
+    </constructor-arg>
+  </bean>
+
+  <bean id="kernel.runtime.session" class="kernel.runtime.Session$Provider">
+    <constructor-arg>
+      <bean factory-bean="kernel.schema.schema" factory-method="openSession"/>
     </constructor-arg>
   </bean>
 
@@ -38,7 +48,8 @@
     <constructor-arg>
       <list>
         <bean class="kernel.runtime.Handler">
-          <property name="location" value="/static/"/>
+          <property name="location" value="/assets/"/>
+          <property name="prefix" value="assets/"/>
           <property name="method" value="get"/>
         </bean>
         <bean class="kernel.runtime.Handler">
@@ -49,11 +60,19 @@
           <property name="method" value="get"/>
         </bean>
         <bean class="kernel.schema.Handler">
-          <constructor-arg ref="vertex.schema"/>
-          <constructor-arg ref="vertex.mapper"/>
+          <constructor-arg ref="kernel.schema.schema"/>
+          <constructor-arg ref="kernel.schema.mapper"/>
           <property name="location" value="/content"/>
           <property name="method" value="get|put|post|delete"/>
         </bean>
+      </list>
+    </constructor-arg>
+  </bean>
+
+  <bean id="kernel.runtime.socket" class="kernel.runtime.Socket">
+    <constructor-arg ref="kernel.runtime.session"/>
+    <constructor-arg>
+      <list>
       </list>
     </constructor-arg>
   </bean>

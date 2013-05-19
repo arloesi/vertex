@@ -4,6 +4,15 @@
   version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
   <persistence-unit name="vertex.schema" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>schema.Account</class>
+    <class>kernel.runtime.Session</class>
+    <class>kernel.runtime.Variable</class>
+    <class>kernel.runtime.Variable$String</class>
+    <class>kernel.runtime.Variable$Integer</class>
+    <class>kernel.runtime.Variable$Rational</class>
+    <class>kernel.runtime.Permission</class>
+    <class>kernel.runtime.Authentication</class>
+    <class>kernel.runtime.Authority</class>
+    <class>kernel.runtime.User</class>
+    <class>kernel.runtime.Group</class>
   </persistence-unit>
 </persistence>

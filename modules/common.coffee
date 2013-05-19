@@ -35,5 +35,5 @@ this.menu = ({id,layout,items,container,model,format}) ->
   text "<!-- /ko -->"
 
 this.module =
-  inline: [script.menu]
+  inline: [scripts.menu]
   markup: []

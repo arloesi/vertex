@@ -1,6 +1,7 @@
 package schema
 
 import kernel.schema._
+import kernel.runtime.User
 
 object Views {
   trait SIMPLE

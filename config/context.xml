@@ -52,6 +52,12 @@
           <property name="prefix" value="assets/"/>
           <property name="method" value="get"/>
         </bean>
+        <bean class="kernel.schema.Handler">
+          <constructor-arg ref="kernel.schema.schema"/>
+          <constructor-arg ref="kernel.schema.mapper"/>
+          <property name="location" value="/content"/>
+          <property name="method" value="get|put|post|delete"/>
+        </bean>
         <bean class="kernel.runtime.Handler">
           <property name="location" value="/"/>
           <property name="prefix" value="modules/"/>
@@ -59,13 +65,13 @@
           <property name="command" value="gradle --daemon assets"/>
           <property name="method" value="get"/>
         </bean>
-        <bean class="kernel.schema.Handler">
-          <constructor-arg ref="kernel.schema.schema"/>
-          <constructor-arg ref="kernel.schema.mapper"/>
-          <property name="location" value="/content"/>
-          <property name="method" value="get|put|post|delete"/>
-        </bean>
       </list>
+    </constructor-arg>
+  </bean>
+
+  <bean id="kernel.runtime.security" class="kernel.runtime.Security">
+    <constructor-arg>
+      <bean factory-bean="kernel.schema.schema" factory-method="openSession"/>
     </constructor-arg>
   </bean>
 
@@ -73,6 +79,7 @@
     <constructor-arg ref="kernel.runtime.session"/>
     <constructor-arg>
       <list>
+        <ref bean="kernel.runtime.security"/>
       </list>
     </constructor-arg>
   </bean>

@@ -1,7 +1,7 @@
 
 scripts =
   menu:
-    class this.Menu
+    class this.Menu2
       constructor: ({menu,container,items,target}) ->
         target ?= items[0].target
 
@@ -26,7 +26,7 @@ scripts =
           self.show target
 
 this.menu = ({id,layout,items,container,model,format}) ->
-  model ?= "new Menu('#{id}','#{container}',#{items})"
+  model ?= "new Menu2('#{id}','#{container}',#{items})"
   layout ?= "horizontal"
   format ?= -> div -> a "item",href:"#","data-bind":"text:title,click:$parent.show,css:{active:target==$parent.active()}"
 
@@ -35,5 +35,5 @@ this.menu = ({id,layout,items,container,model,format}) ->
   text "<!-- /ko -->"
 
 this.module =
-  inline: [scripts.menu]
+  inline: []
   markup: []

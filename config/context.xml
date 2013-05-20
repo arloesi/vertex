@@ -55,7 +55,7 @@
         <bean class="kernel.schema.Handler">
           <constructor-arg ref="kernel.schema.schema"/>
           <constructor-arg ref="kernel.schema.mapper"/>
-          <property name="location" value="/content"/>
+          <property name="pattern" value="/content/:view/:type/:id|/content/:view/:type|/content"/>
           <property name="method" value="get|put|post|delete"/>
         </bean>
         <bean class="kernel.runtime.Handler">
@@ -70,9 +70,7 @@
   </bean>
 
   <bean id="kernel.runtime.security" class="kernel.runtime.Security">
-    <constructor-arg>
-      <bean factory-bean="kernel.schema.schema" factory-method="openSession"/>
-    </constructor-arg>
+    <constructor-arg ref="kernel.schema.schema"/>
   </bean>
 
   <bean id="kernel.runtime.socket" class="kernel.runtime.Socket">

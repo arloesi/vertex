@@ -12,7 +12,7 @@ bundles {
 
 modules {
   node {
-    include = ["kernel","common"]
+    include = ["common"]
     scripts = ["assets/scripts/node.coffee"]
     styles = ["assets/styles/node.less"]
   }

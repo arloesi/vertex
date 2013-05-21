@@ -2,7 +2,7 @@
 main = ->
   $ ->
     $.user = ($.content.factory.create "/detail/user").extend url:"/content/detail/user"
-    $.users = new ($.content.collection.extend model:$.user,url:"/content/detail/user")
+    $.users = new ($.content.collection.extend model:$.user,url:"/content/simple/user")
 
   class this.Main
     constructor: (i) ->

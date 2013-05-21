@@ -30,10 +30,10 @@ inline =
 this.menu = ({id,layout,items,container,model,format}) ->
   model ?= "new Menu({menu:'#{id}',container:'#{container}',items:#{items}})"
   layout ?= "horizontal"
-  format ?= -> div -> a "item",href:"#","data-bind":"text:title,click:$parent.show,css:{active:target==$parent.active()}"
+  format ?= -> li -> a "item",href:"#","data-bind":"text:title,click:$parent.show,css:{active:target==$parent.active()}"
 
   text "<!-- ko with:#{model} -->"
-  div "menu.#{layout}","data-bind":"foreach:items,init:complete,attr:{id:id}", format
+  ul "nav.menu.#{layout}","data-bind":"foreach:items,init:complete,attr:{id:id}", format
   text "<!-- /ko -->"
 
 this.master = (i) ->
@@ -49,12 +49,7 @@ this.master = (i) ->
         div "navbar-inner", ->
           div "container", ->
             a "brand", href:"#", i.title
-            div "nav-collapse.collapse", ->
-              ul "nav", ->
-                li -> a href:"#", "Home"
-                li -> a href:"#about", "About"
-              i.header()
-
+            div "nav-collapse.collapse", i.header
       div "#content.center", i.content
 
 this.module =

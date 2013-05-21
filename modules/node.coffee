@@ -1,7 +1,6 @@
 
 main = ->
   $ ->
-    $.services.security.events.authenticated.subscribe ({error,message}) -> alert message
     $.services.security.events.created.subscribe -> $.users.fetch()
 
     $.user = $.content.factory.create "/detail/user"
@@ -11,8 +10,7 @@ main = ->
     constructor: (i) ->
       self = this
 
-      this.login = ->
-        $.services.security.authenticate name:self.name(),pass:self.pass()
+      $.services.security.events.authenticated.subscribe ({error,message}) -> self.message message
 
       this.save = ->
         $.users.save()
@@ -24,12 +22,18 @@ main = ->
 
         exec: -> $.services.security.create
           name:self.create.name()
-          mail:self.create.name()+"@mail.com"
+          mail:self.create.mail()
           pass:self.create.pass()
 
       this.signin =
         name: ko.observable()
         pass: ko.observable()
+
+        exec: -> $.services.security.authenticate
+          name:self.signin.name()
+          pass:self.signin.pass()
+
+      this.message = ko.observable()
 
       this.users = kb.collectionObservable $.users
       this.items = [{title:"Administrator",target:".administrator"},{title:"Sign In",target:".user"}]
@@ -58,7 +62,10 @@ this.module =
           input type:"text",placeholder:"Email","data-bind":"value:mail"
           input type:"password",placeholder:"Password","data-bind":"value:pass"
           button "btn","data-bind":"click:exec","Create"
-        div "user", "User"
+        div "user","data-bind":"with:signin", ->
+          input type:"text",placeholder:"Username","data-bind":"value:name"
+          input type:"password",placeholder:"Password","data-bind":"value:pass"
+          button "btn","data-bind":"click:exec","Sign In"
 
     content: ->
       div "wrap.administrator", ->
@@ -75,7 +82,6 @@ this.module =
               input type:"text","data-bind":"value:mail"
               text "&nbsp"
           comment "/ko"
-      div "wrap.user", ->
-        text "User"
+      div "wrap.user","data-bind":"text:message"
 
 

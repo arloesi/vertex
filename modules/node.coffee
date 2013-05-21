@@ -14,17 +14,25 @@ main = ->
       this.login = ->
         $.services.security.authenticate name:self.name(),pass:self.pass()
 
-      this.create = ->
-        $.services.security.create name:self.name(),mail:self.name()+"@mail.com",pass:self.pass()
-
       this.save = ->
         $.users.save()
 
-      this.name = ko.observable()
-      this.pass = ko.observable()
+      this.create =
+        name: ko.observable()
+        mail: ko.observable()
+        pass: ko.observable()
+
+        exec: -> $.services.security.create
+          name:self.create.name()
+          mail:self.create.name()+"@mail.com"
+          pass:self.create.pass()
+
+      this.signin =
+        name: ko.observable()
+        pass: ko.observable()
 
       this.users = kb.collectionObservable $.users
-      this.items = [{title:"Administrator",target:".administrator"},{title:"User",target:".user"}]
+      this.items = [{title:"Administrator",target:".administrator"},{title:"Sign In",target:".user"}]
 
   $ ->
     ko.applyBindings new Main()
@@ -45,11 +53,11 @@ this.module =
     header: ->
       menu id:"menu",container:"#content,#form",items:"items"
       div "#form.navbar-form.pull-right", ->
-        div "administrator", ->
+        div "administrator","data-bind":"with:create", ->
           input type:"text",placeholder:"Username","data-bind":"value:name"
+          input type:"text",placeholder:"Email","data-bind":"value:mail"
           input type:"password",placeholder:"Password","data-bind":"value:pass"
-          button "btn","data-bind":"click:login","Sign In"
-          button "btn","data-bind":"click:create","Register"
+          button "btn","data-bind":"click:exec","Create"
         div "user", "User"
 
     content: ->

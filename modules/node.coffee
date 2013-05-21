@@ -49,11 +49,19 @@ this.module =
         button "btn","data-bind":"click:create","Register"
 
     content: ->
-      div "wrap","data-bind":"foreach:users", ->
-        div "table", ->
+      div "wrap", ->
+        div "table.left", ->
           div ->
-            label "Name:&nbsp"
-            input type:"text","data-bind":"value:name"
-            input type:"button",value:"Save","data-bind":"click:$parent.save"
+            div "Name"
+            div "Email"
+          comment "ko foreach:users"
+          div ->
+            div ->
+              input type:"text","data-bind":"value:name"
+              text "&nbsp"
+            div ->
+              input type:"text","data-bind":"value:mail"
+              text "&nbsp"
+          comment "/ko"
 
 

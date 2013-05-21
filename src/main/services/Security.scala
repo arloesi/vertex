@@ -42,6 +42,11 @@ class Security(schema:kernel.schema.Schema) {
     if(users.size() == 1) {
       msg = "Welcome "+name+"."
       err = false
+
+      val authentication = new Authentication()
+      authentication.name = "authentication"
+      authentication.user = users.head.asInstanceOf[User];
+      connection.session.save(provider,authentication)
     } else {
       msg = "Incorrect username or password."
       err = true

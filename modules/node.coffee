@@ -24,7 +24,6 @@ main = ->
       this.pass = ko.observable()
 
       this.users = kb.collectionObservable $.users
-
       this.items = [{title:"Administrator",target:".administrator"},{title:"User",target:".user"}]
 
   $ ->
@@ -41,15 +40,17 @@ this.module =
         input type:"text","data-bind":"value:name"
 
   master: master
-    title: "Sample"
+    title: "Vert.x"
 
     header: ->
-      menu id:"menu",container:"#content",items:"items"
-      div "navbar-form.pull-right", ->
-        input type:"text",placeholder:"Username","data-bind":"value:name"
-        input type:"password",placeholder:"Password","data-bind":"value:pass"
-        button "btn","data-bind":"click:login","Sign In"
-        button "btn","data-bind":"click:create","Register"
+      menu id:"menu",container:"#content,#form",items:"items"
+      div "#form.navbar-form.pull-right", ->
+        div "administrator", ->
+          input type:"text",placeholder:"Username","data-bind":"value:name"
+          input type:"password",placeholder:"Password","data-bind":"value:pass"
+          button "btn","data-bind":"click:login","Sign In"
+          button "btn","data-bind":"click:create","Register"
+        div "user", "User"
 
     content: ->
       div "wrap.administrator", ->

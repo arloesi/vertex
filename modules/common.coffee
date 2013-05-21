@@ -20,9 +20,10 @@ inline =
 
           self.active i.target
 
-
-          $(container+" > *").hide()
-          $(container+" > #{i.target}").show()
+          for x in container.split ","
+            console.log "container: #{x} => #{i.target}"
+            $("#{x} > *").hide()
+            $("#{x} > #{i.target}").show()
 
         this.complete = ->
           self.show target

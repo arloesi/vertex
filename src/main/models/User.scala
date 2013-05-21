@@ -4,11 +4,13 @@ import java.util._
 import scala.collection.JavaConversions._
 import javax.persistence._
 import javax.xml.bind.annotation._
-import kernel.schema.{Property}
+import kernel.schema.{Property,Serializable}
 import kernel.runtime.digest._
+
 
 @Entity
 @Table(name="model_user")
+@Serializable(views=Array(classOf[Views.SIMPLE],classOf[Views.DETAIL]))
 class User {
   @Id
   @XmlElement

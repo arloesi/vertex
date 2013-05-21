@@ -3,7 +3,7 @@ main = ->
   $ ->
     $.services.security.events.created.subscribe -> $.users.fetch()
 
-    $.user = $.content.factory.create "/detail/user"
+    $.user = ($.content.factory.create "/detail/user").extend url:"/content/detail/user"
     $.users = new ($.content.collection.extend model:$.user,url:"/content/detail/user")
 
   class this.Main
@@ -19,11 +19,9 @@ main = ->
         name: ko.observable()
         mail: ko.observable()
         pass: ko.observable()
-
-        exec: -> $.services.security.create
-          name:self.create.name()
-          mail:self.create.mail()
-          pass:self.create.pass()
+        exec: ->
+          user = new $.user name:self.create.name(),mail:self.create.mail(),decryptedPassword:self.create.pass()
+          user.save null,success: -> $.users.fetch()
 
       this.signin =
         name: ko.observable()
@@ -58,9 +56,11 @@ this.module =
       menu id:"menu",container:"#content,#form",items:"items"
       div "#form.navbar-form.pull-right", ->
         div "administrator","data-bind":"with:create", ->
+          # comment "ko with:kb.viewModel(user)"
           input type:"text",placeholder:"Username","data-bind":"value:name"
           input type:"text",placeholder:"Email","data-bind":"value:mail"
           input type:"password",placeholder:"Password","data-bind":"value:pass"
+          # comment "/ko"
           button "btn","data-bind":"click:exec","Create"
         div "user","data-bind":"with:signin", ->
           input type:"text",placeholder:"Username","data-bind":"value:name"
@@ -70,7 +70,7 @@ this.module =
     content: ->
       div "wrap.administrator", ->
         div "table.left", ->
-          div ->
+          div "data-bind":"if:users().length>0", ->
             div "Name"
             div "Email"
           comment "ko foreach:users"

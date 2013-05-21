@@ -34,4 +34,8 @@ class User {
       this.pass = sha(pass)
     }
   }
+
+  @XmlElement
+  @Property(view=classOf[Views.DETAIL])
+  def getDecryptedPassword():String = null
 }

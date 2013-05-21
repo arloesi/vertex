@@ -1,8 +1,6 @@
 
 main = ->
   $ ->
-    $.services.security.events.created.subscribe -> $.users.fetch()
-
     $.user = ($.content.factory.create "/detail/user").extend url:"/content/detail/user"
     $.users = new ($.content.collection.extend model:$.user,url:"/content/detail/user")
 

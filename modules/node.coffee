@@ -56,11 +56,9 @@ this.module =
       menu id:"menu",container:"#content,#form",items:"items"
       div "#form.navbar-form.pull-right", ->
         div "administrator","data-bind":"with:create", ->
-          # comment "ko with:kb.viewModel(user)"
           input type:"text",placeholder:"Username","data-bind":"value:name"
           input type:"text",placeholder:"Email","data-bind":"value:mail"
           input type:"password",placeholder:"Password","data-bind":"value:pass"
-          # comment "/ko"
           button "btn","data-bind":"click:exec","Create"
         div "user","data-bind":"with:signin", ->
           input type:"text",placeholder:"Username","data-bind":"value:name"

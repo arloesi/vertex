@@ -1,32 +1,37 @@
 
-inline =
-  menu: ->
-    class this.Menu
-      constructor: ({menu,container,items,target}) ->
-        target ?= items[0].target
+inline = ->
+  class this.Model extends kb.ViewModel
+    constructor: (model,attrs) ->
+      super model
+      self = this
+      _.extend this,attrs
 
-        self = this
+  class this.Menu
+    constructor: ({menu,container,items,target}) ->
+      target ?= items[0].target
 
-        this.id = menu
-        this.items = items
-        this.active = ko.observable(items[0].target)
+      self = this
 
-        this.show = (i) ->
-          if typeof i == "string"
-            for x in self.items
-              if x.target == i
-                i = x
-                break
+      this.id = menu
+      this.items = items
+      this.active = ko.observable(items[0].target)
 
-          self.active i.target
+      this.show = (i) ->
+        if typeof i == "string"
+          for x in self.items
+            if x.target == i
+              i = x
+              break
 
-          for x in container.split ","
-            console.log "container: #{x} => #{i.target}"
-            $("#{x} > *").hide()
-            $("#{x} > #{i.target}").show()
+        self.active i.target
 
-        this.complete = ->
-          self.show target
+        for x in container.split ","
+          console.log "container: #{x} => #{i.target}"
+          $("#{x} > *").hide()
+          $("#{x} > #{i.target}").show()
+
+      this.complete = ->
+        self.show target
 
 this.menu = ({id,layout,items,container,model,format}) ->
   model ?= "new Menu({menu:'#{id}',container:'#{container}',items:#{items}})"
@@ -54,5 +59,5 @@ this.master = (i) ->
       div "#content.center", i.content
 
 this.module =
-  inline: [inline.menu]
+  inline: [inline]
   markup: []

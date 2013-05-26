@@ -2,7 +2,7 @@
 main = ->
   $ ->
     $.user = ($.content.factory.create "/detail/user").extend url:"/content/detail/user"
-    $.users = new ($.content.collection.extend model:$.user,url:"/content/simple/user")
+    $.users = new ($.content.collection.extend model:$.content.factory.create "/simple/user",url:"/content/simple/user")
 
   class this.Main
     constructor: (i) ->
@@ -14,24 +14,12 @@ main = ->
         $.users.save()
 
       this.destroy = (i) ->
-        console.log "delete: "+i.id()
         user = new $.user id:i.id()
         user.destroy success: -> $.users.fetch()
 
-      this.user = new $.user
-      this.create = new kb.viewModel this.user
-      this.create.exec = ->
-        self.user.save null,success: -> $.users.fetch()
-
-      ###
-      this.create =
-        name: ko.observable()
-        mail: ko.observable()
-        pass: ko.observable()
-        exec: ->
-          user = new $.user name:self.create.name(),mail:self.create.mail(),decryptedPassword:self.create.pass()
-          user.save null,success: -> $.users.fetch()
-      ###
+      # Validation fails because id is null
+      this.create = new Model new $.user(),
+        save: (i) -> i.model().save null, success: -> $.users.fetch()
 
       this.signin =
         name: ko.observable()
@@ -42,7 +30,6 @@ main = ->
           pass:self.signin.pass()
 
       this.message = ko.observable()
-
       this.users = kb.collectionObservable $.users
       this.items = [{title:"Administrator",target:".administrator"},{title:"Sign In",target:".user"}]
 
@@ -65,7 +52,7 @@ this.module =
           input type:"text",placeholder:"Username","data-bind":"value:name"
           input type:"text",placeholder:"Email","data-bind":"value:mail"
           input type:"password",placeholder:"Password","data-bind":"value:decryptedPassword"
-          button "btn","data-bind":"click:exec","Create"
+          button "btn","data-bind":"click:save","Create"
           comment "/ko"
           button "btn","data-bind":"click:save","Save"
         div "user","data-bind":"with:signin", ->

@@ -18,6 +18,12 @@ main = ->
         user = new $.user id:i.id()
         user.destroy success: -> $.users.fetch()
 
+      this.user = new $.user
+      this.create = new kb.viewModel this.user
+      this.create.exec = ->
+        self.user.save null,success: -> $.users.fetch()
+
+      ###
       this.create =
         name: ko.observable()
         mail: ko.observable()
@@ -25,6 +31,7 @@ main = ->
         exec: ->
           user = new $.user name:self.create.name(),mail:self.create.mail(),decryptedPassword:self.create.pass()
           user.save null,success: -> $.users.fetch()
+      ###
 
       this.signin =
         name: ko.observable()
@@ -57,7 +64,7 @@ this.module =
           comment "ko with:create"
           input type:"text",placeholder:"Username","data-bind":"value:name"
           input type:"text",placeholder:"Email","data-bind":"value:mail"
-          input type:"password",placeholder:"Password","data-bind":"value:pass"
+          input type:"password",placeholder:"Password","data-bind":"value:decryptedPassword"
           button "btn","data-bind":"click:exec","Create"
           comment "/ko"
           button "btn","data-bind":"click:save","Save"

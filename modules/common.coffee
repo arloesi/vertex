@@ -21,6 +21,7 @@ common = ->
               break
 
         self.active i.target
+        true
 
       this.complete = ->
         self.show target
@@ -28,7 +29,7 @@ common = ->
 main = -> $ ->
   this.controller = new Controller()
   ko.applyBindings this.controller
-  this.controller.initialize()
+  # this.controller.initialize()
 
 this.menu = ({id,layout,model,format}) ->
   id = "#{id}." if id

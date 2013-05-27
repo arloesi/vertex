@@ -1,7 +1,9 @@
 
 main = ->
   $.member = $.content.factory.create "/detail/member"
-  $.members = new ($.content.collection.extend model:$.content.factory.create "/simple/member",url:"/content/simple/member")
+  $.members = new ($.content.collection.extend
+    model:$.content.factory.create "/simple/member"
+    url:"/content/simple/member")
 
   class this.SignIn
     constructor: ->
@@ -19,20 +21,23 @@ main = ->
     active: null
 
     routes:
-      "account/:id":"account"
-      "venue/:id":"venue"
-      "*path": "main"
+      ":id":"route"
 
     constructor: ->
+      super()
+
       self = this
 
-      this.menu = new Menu items:
+      this.menu =
         [{title:"Members",target:"members"}
         ,{title:"Accounts",target:"accounts"}
         ,{title:"Venues",target:"venues"}]
 
-      this.menu.active.subscribe (i) ->
-        console.log "target: "+i
+      this.active = ko.observable "members"
+      this.on "route:route", (id) ->
+        console.log "route: #{id}"
+        self.active id
+      Backbone.history.start();
 
     load: (e) ->
       ko.removeNode active if active
@@ -48,20 +53,21 @@ this.module =
     "venue.html": ->
       div "venue", "My Venue"
 
-    "members-html": ->
+    "members.html": ->
       h4 -> "Members"
 
-    "accounts-html": ->
+    "accounts.html": ->
       h4 -> "Accounts"
 
-    "venues-html": ->
+    "venues.html": ->
       h4 -> "Venues"
 
   master: master
     title: "Administrator"
 
     header: ->
-      menu id:"#menu"
+      ul "menu.nav.horizontal","data-bind":"foreach:menu", ->
+        li -> a "item",href:"#","data-bind":"text:title,attr:{href:'#'+target}"
 
       div "#form.navbar-form.pull-right","signin","data-bind":"with:new SignIn()", ->
         input type:"text",placeholder:"Username","data-bind":"value:name"
@@ -69,7 +75,7 @@ this.module =
         button "btn","data-bind":"click:signin","Sign In"
 
     content: ->
-      div "#content.wrap", "data-bind":"foreach:menu.items", ->
-        comment "ko if:target==$parent.menu.active()"
-        # div "data-bind":"template:target+'-html',attr:{id:target}"
+      div "#content.wrap", "data-bind":"foreach:menu", ->
+        comment "ko if:target==$parent.active()"
+        div "data-bind":"template:target+'.html',attr:{id:target}"
         comment "/ko"

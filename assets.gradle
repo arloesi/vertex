@@ -1,5 +1,5 @@
 include = ["../kernel"]
-locales = ["en-us","de"]
+locales = ["en","de"]
 
 bundles {
   common {

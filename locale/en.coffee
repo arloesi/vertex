@@ -1,5 +1,7 @@
 
 this.locale =
+  name: "en"
+
   admin:
     title: "Administrator"
 

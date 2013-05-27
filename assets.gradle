@@ -12,9 +12,15 @@ bundles {
 }
 
 modules {
-  home {
+  admin {
     include = ["common"]
-    scripts = ["assets/scripts/home.coffee"]
-    styles = ["assets/styles/home.less"]
+    scripts = ["assets/scripts/admin.coffee"]
+    styles = ["assets/styles/admin.less"]
+  }
+
+  profile {
+    include = ["common"]
+    scripts = ["assets/scripts/profile.coffee"]
+    styles = ["assets/styles/profile.less"]
   }
 }

@@ -62,6 +62,7 @@
           <property name="location" value="/"/>
           <property name="prefix" value="modules/"/>
           <property name="suffix" value=".html"/>
+          <property name="default" value="profile"/>
           <property name="command" value="gradle --daemon assets"/>
           <property name="method" value="get"/>
         </bean>

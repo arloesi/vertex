@@ -29,7 +29,9 @@ common = ->
 main = -> $ ->
   this.controller = new Controller()
   ko.applyBindings this.controller
-  # this.controller.initialize()
+
+  if typeof this.controller.initialize == "function"
+    this.controller.initialize()
 
 this.menu = ({id,layout,model,format}) ->
   id = "#{id}." if id

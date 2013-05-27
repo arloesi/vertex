@@ -17,11 +17,10 @@ main = ->
 
       this.signin = -> $.services.security.authenticate name:self.name(),pass:self.pass()
 
-  class this.Controller extends Backbone.Router
-    active: null
-
-    routes:
-      ":id":"route"
+  class this.Controller
+    Router: Backbone.Router.extend
+      routes:
+        ":id":"main"
 
     constructor: ->
       super()
@@ -34,14 +33,12 @@ main = ->
         ,{title:"Venues",target:"venues"}]
 
       this.active = ko.observable "members"
-      this.on "route:route", (id) ->
-        console.log "route: #{id}"
-        self.active id
-      Backbone.history.start();
+      this.router = new this.Router()
 
-    load: (e) ->
-      ko.removeNode active if active
-      element.append (active=e)
+      this.router.on "route:main", (i) ->
+          console.log "id: #{i}"
+
+      Backbone.history.start()
 
 this.module =
   inline: [main]

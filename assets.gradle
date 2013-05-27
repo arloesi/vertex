@@ -17,10 +17,4 @@ modules {
     scripts = ["assets/scripts/admin.coffee"]
     styles = ["assets/styles/admin.less"]
   }
-
-  profile {
-    include = ["common"]
-    scripts = ["assets/scripts/profile.coffee"]
-    styles = ["assets/styles/profile.less"]
-  }
 }

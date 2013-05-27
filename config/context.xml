@@ -24,8 +24,8 @@
     </constructor-arg>
     <constructor-arg>
       <list>
-        <value>models.Views$SIMPLE</value>
-        <value>models.Views$DETAIL</value>
+        <value>kernel.runtime.Views$SIMPLE</value>
+        <value>kernel.runtime.Views$DETAIL</value>
       </list>
     </constructor-arg>
   </bean>
@@ -70,7 +70,7 @@
     </constructor-arg>
   </bean>
 
-  <bean id="services.security" class="services.Security">
+  <bean id="kernel.runtime.security" class="kernel.runtime.Security">
     <constructor-arg ref="kernel.schema.schema"/>
   </bean>
 
@@ -78,7 +78,7 @@
     <constructor-arg ref="kernel.runtime.session"/>
     <constructor-arg>
       <list>
-        <ref bean="services.security"/>
+        <ref bean="kernel.runtime.security"/>
       </list>
     </constructor-arg>
   </bean>

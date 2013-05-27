@@ -8,6 +8,7 @@
     <class>kernel.runtime.Variable</class>
     <class>kernel.runtime.Member</class>
     <class>kernel.runtime.Group</class>
+    <class>kernel.runtime.Permission</class>
     <class>kernel.runtime.Authentication</class>
   </persistence-unit>
 </persistence>

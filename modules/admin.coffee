@@ -1,7 +1,7 @@
 
 main = ->
-  $.user = ($.content.factory.create "/detail/user").extend url:"/content/detail/user"
-  $.users = new ($.content.collection.extend model:$.content.factory.create "/simple/user",url:"/content/simple/user")
+  $.member = ($.content.factory.create "/detail/member").extend url:"/content/detail/member"
+  $.members = new ($.content.collection.extend model:$.content.factory.create "/simple/member",url:"/content/simple/member")
 
   class this.SignIn
     constructor: ->
@@ -9,72 +9,59 @@ main = ->
 
       $.services.security.events.authenticated.subscribe ({error,message}) -> self.message message
 
-      this.signin =
-        name: ko.observable()
-        pass: ko.observable()
-        exec: -> $.services.security.authenticate
-          name:self.signin.name()
-          pass:self.signin.pass()
-
+      this.name = ko.observable()
+      this.pass = ko.observable()
       this.message = ko.observable()
 
-  class this.Administrator
+      this.signin = -> $.services.security.authenticate name:self.name(),pass:self.pass()
+
+  class this.Controller extends Backbone.Router
+    active: null
+
+    routes:
+      "account/:id":"account"
+      "venue/:id":"venue"
+      "*path": "default"
+
     constructor: ->
       self = this
 
-      this.save = ->
-        $.users.save()
+      this.menu = new Menu items:
+        [{title:"Members",target:"members"}
+        ,{title:"Accounts",target:"accounts"}
+        ,{title:"Venues",target:"venues"}]
 
-      this.destroy = (i) ->
-        user = new $.user id:i.id()
-        user.destroy success: -> $.users.fetch()
+      this.menu.active.subscribe (i) ->
+        console.log "target: "+i
 
-      this.create = new View new $.user(),
-        save: (i) ->
-          i.model().save null,
-            success: -> $.users.fetch()
-            error: -> alert "save user failed"
-
-      this.users = kb.collectionObservable $.users
-
-  controller = (model,element) ->
-
-  this.initialize = ->
-    $.users.fetch()
+    load: (e) ->
+      ko.removeNode active if active
+      element.append (active=e)
 
 this.module =
   inline: [main]
 
   markup:
-    "profile.html": ->
-      div "profile", "My Profile"
-
     "account.html": ->
       div "account", "My Account"
 
-    "administrator.html": ->
-      div "administrator", ->
-        div "table.left", ->
-          div "data-bind":"if:users().length>0", ->
-            div "Name"
-            div "Email"
-          comment "ko foreach:users"
-          div ->
-            div ->
-              input type:"text","data-bind":"value:name"
-              text "&nbsp"
-            div ->
-              input type:"text","data-bind":"value:mail"
-              text "&nbsp"
-            div ->
-              button "btn","data-bind":"click:$parent.destroy","Delete"
-          comment "/ko"
+    "venue.html": ->
+      div "venue", "My Venue"
+
+    "members.html": ->
+      h4 -> "Members"
+
+    "accounts.html": ->
+      h4 -> "Accounts"
+
+    "venues.html": ->
+      h4 -> "Venues"
 
   master: master
     title: "Administrator"
 
     header: ->
-      menu id:"menu",container:"#content,#form",items:"items"
+      menu id:"#menu"
 
       div "#form.navbar-form.pull-right","signin","data-bind":"with:new SignIn()", ->
         input type:"text",placeholder:"Username","data-bind":"value:name"
@@ -82,4 +69,5 @@ this.module =
         button "btn","data-bind":"click:signin","Sign In"
 
     content: ->
-      div "wrap","data-bind":"inject:controller",
+      div "#content.wrap", "data-bind":"foreach:menu.items", ->
+        div "data-bind":"if:target==menu.active(),template:target+'.html',attr:{id:target}"

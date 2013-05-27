@@ -1,18 +1,15 @@
 
-inline = ->
+common = ->
   class this.View extends kb.ViewModel
-    constructor: (model,attrs) ->
+    constructor: (model,ctor) ->
       super model
-      self = this
-      _.extend this,attrs
+      ctor.call this
 
   class this.Menu
-    constructor: ({menu,container,items,target}) ->
+    constructor: ({items,target}) ->
       target ?= items[0].target
 
       self = this
-
-      this.id = menu
       this.items = items
       this.active = ko.observable(items[0].target)
 
@@ -25,22 +22,29 @@ inline = ->
 
         self.active i.target
 
-        for x in container.split ","
-          console.log "container: #{x} => #{i.target}"
-          $("#{x} > *").hide()
-          $("#{x} > #{i.target}").show()
-
       this.complete = ->
         self.show target
 
-this.menu = ({id,layout,items,container,model,format}) ->
-  model ?= "new Menu({menu:'#{id}',container:'#{container}',items:#{items}})"
-  layout ?= "horizontal"
-  format ?= -> li -> a "item",href:"#","data-bind":"text:title,click:$parent.show,css:{active:target==$parent.active()}"
+main = -> $ ->
+  this.controller = new Controller()
+  ko.applyBindings this.controller
+  this.controller.initialize()
+
+this.menu = ({id,layout,model,format}) ->
+  id = "#{id}." if id
+
+  model ?= "menu"
+  layout ?= "nav.horizontal"
+  format ?= -> li -> a "item",
+    href:"#","data-bind":"text:title,click:$parent.show,css:{active:target==$parent.active()},attr:{href:'#'+target}"
 
   text "<!-- ko with:#{model} -->"
-  ul "nav.menu.#{layout}","data-bind":"foreach:items,init:complete,attr:{id:id}", format
+  ul "#{id}menu.#{layout}","data-bind":"foreach:items,init:complete", format
   text "<!-- /ko -->"
+
+this.links = (items) ->
+  ul "nav.horizontal", ->
+    li -> a href:"##{i.target}",i.title for i in items
 
 this.master = (i) ->
   head: ->
@@ -50,15 +54,14 @@ this.master = (i) ->
     title i.title
 
   body: ->
-    div "#container","kb-inject":"options:{afterBinding:initialize}", ->
+    div "#container", ->
       div "navbar.navbar-inverse.navbar-fixed-top", ->
         div "navbar-inner", ->
           div "container", ->
             a "brand", href:"#", i.title
             div "nav-collapse.collapse", i.header
-      div "#content.center", "data-bind":"inject:controller"
-
+      div "center", i.content
 
 this.module =
-  inline: [inline]
+  inline: [common,main]
   markup: []

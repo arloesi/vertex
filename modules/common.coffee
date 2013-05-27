@@ -1,6 +1,6 @@
 
 inline = ->
-  class this.Model extends kb.ViewModel
+  class this.View extends kb.ViewModel
     constructor: (model,attrs) ->
       super model
       self = this
@@ -50,13 +50,14 @@ this.master = (i) ->
     title i.title
 
   body: ->
-    div "#container", ->
+    div "#container","kb-inject":"options:{afterBinding:initialize}", ->
       div "navbar.navbar-inverse.navbar-fixed-top", ->
         div "navbar-inner", ->
           div "container", ->
             a "brand", href:"#", i.title
             div "nav-collapse.collapse", i.header
-      div "#content.center", i.content
+      div "#content.center", "data-bind":"inject:controller"
+
 
 this.module =
   inline: [inline]

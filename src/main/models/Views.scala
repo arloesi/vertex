@@ -3,8 +3,10 @@ package models
 import kernel.schema._
 
 object Views {
-  trait SIMPLE
-  trait DETAIL
+  final val K = kernel.runtime.Views
+
+  trait SIMPLE extends K.SIMPLE
+  trait DETAIL extends K.DETAIL
 
   @View(target=classOf[SIMPLE])
   trait MEMBER

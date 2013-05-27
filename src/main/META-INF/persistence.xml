@@ -6,7 +6,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>kernel.runtime.Session</class>
     <class>kernel.runtime.Variable</class>
-    <class>models.Authentication</class>
-    <class>models.User</class>
+    <class>kernel.runtime.Member</class>
+    <class>kernel.runtime.Group</class>
+    <class>kernel.runtime.Authentication</class>
   </persistence-unit>
 </persistence>

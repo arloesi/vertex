@@ -1,13 +1,13 @@
 
 main = ->
-  $.member = ($.content.factory.create "/detail/member").extend url:"/content/detail/member"
+  $.member = $.content.factory.create "/detail/member"
   $.members = new ($.content.collection.extend model:$.content.factory.create "/simple/member",url:"/content/simple/member")
 
   class this.SignIn
     constructor: ->
       self = this
 
-      $.services.security.events.authenticated.subscribe ({error,message}) -> self.message message
+      $ -> $.services.security.events.authenticated.subscribe ({error,message}) -> self.message message
 
       this.name = ko.observable()
       this.pass = ko.observable()
@@ -21,7 +21,7 @@ main = ->
     routes:
       "account/:id":"account"
       "venue/:id":"venue"
-      "*path": "default"
+      "*path": "main"
 
     constructor: ->
       self = this
@@ -48,13 +48,13 @@ this.module =
     "venue.html": ->
       div "venue", "My Venue"
 
-    "members.html": ->
+    "members-html": ->
       h4 -> "Members"
 
-    "accounts.html": ->
+    "accounts-html": ->
       h4 -> "Accounts"
 
-    "venues.html": ->
+    "venues-html": ->
       h4 -> "Venues"
 
   master: master
@@ -70,4 +70,6 @@ this.module =
 
     content: ->
       div "#content.wrap", "data-bind":"foreach:menu.items", ->
-        div "data-bind":"if:target==menu.active(),template:target+'.html',attr:{id:target}"
+        comment "ko if:target==$parent.menu.active()"
+        # div "data-bind":"template:target+'-html',attr:{id:target}"
+        comment "/ko"

@@ -11,9 +11,9 @@ bundles {
 }
 
 modules {
-  node {
+  home {
     include = ["common"]
-    scripts = ["assets/scripts/node.coffee"]
-    styles = ["assets/styles/node.less"]
+    scripts = ["assets/scripts/home.coffee"]
+    styles = ["assets/styles/home.less"]
   }
 }

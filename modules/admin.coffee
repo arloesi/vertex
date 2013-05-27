@@ -23,8 +23,6 @@ main = ->
         ":id":"main"
 
     constructor: ->
-      super()
-
       self = this
 
       this.menu =
@@ -34,22 +32,13 @@ main = ->
 
       this.active = ko.observable "members"
       this.router = new this.Router()
-
-      this.router.on "route:main", (i) ->
-          console.log "id: #{i}"
-
+      this.router.on "route:main", self.active
       Backbone.history.start()
 
 this.module =
   inline: [main]
 
   markup:
-    "account.html": ->
-      div "account", "My Account"
-
-    "venue.html": ->
-      div "venue", "My Venue"
-
     "members.html": ->
       h4 -> "Members"
 

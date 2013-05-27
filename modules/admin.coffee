@@ -1,10 +1,5 @@
 
 main = ->
-  $.member = $.content.factory.create "/detail/member"
-  $.members = new ($.content.collection.extend
-    model:$.content.factory.create "/simple/member"
-    url:"/content/simple/member")
-
   class this.SignIn
     constructor: ->
       self = this
@@ -17,6 +12,28 @@ main = ->
 
       this.signin = -> $.services.security.authenticate name:self.name(),pass:self.pass()
 
+  class this.Members
+    constructor: (controller) ->
+      detail = $.content.factory.create "/detail/member"
+      simple = $.content.factory.create "/simple/member"
+
+      model = new detail()
+      collection = new ($.content.collection.extend model:simple,url:"/content/simple/member")
+
+      this.member = new View model, ->
+        this.save = ->
+          model.save null,success: ->
+            model.clear().set model.defaults
+            collection.fetch()
+
+      this.members = kb.collectionObservable collection
+
+      this.remove = (i) ->
+        model = new simple id:i.id()
+        model.destroy success: -> collection.fetch()
+
+      collection.fetch()
+
   class this.Controller
     Router: Backbone.Router.extend
       routes:
@@ -26,21 +43,33 @@ main = ->
       self = this
 
       this.menu =
-        [{title:"Members",target:"members"}
-        ,{title:"Accounts",target:"accounts"}
-        ,{title:"Venues",target:"venues"}]
+        [{title:"Members",target:"members",data:new Members(this)}
+        ,{title:"Accounts",target:"accounts",data:{}}
+        ,{title:"Venues",target:"venues",data:{}}]
 
       this.active = ko.observable "members"
       this.router = new this.Router()
       this.router.on "route:main", self.active
       Backbone.history.start()
 
+members = ->
+  div "navbar-form","data-bind":"with:member", ->
+    input type:"text",placeholder:"Username","data-bind":"value:name"
+    input type:"text",placeholder:"Email","data-bind":"value:mail"
+    input type:"password",placeholder:"Password","data-bind":"value:decryptedPassword"
+    input "btn",type:"button",value:"Create","data-bind":"click:save"
+
+  div "table","data-bind":"foreach:members", ->
+    div ->
+      div "data-bind":"text:name"
+      div "data-bind":"text:mail"
+      div -> input type:"button",value:"Remove","data-bind":"click:$parent.remove"
+
 this.module =
   inline: [main]
 
   markup:
-    "members.html": ->
-      h4 -> "Members"
+    "members.html": members
 
     "accounts.html": ->
       h4 -> "Accounts"
@@ -63,5 +92,5 @@ this.module =
     content: ->
       div "#content.wrap", "data-bind":"foreach:menu", ->
         comment "ko if:target==$parent.active()"
-        div "data-bind":"template:target+'.html',attr:{id:target}"
+        div "data-bind":"template:{name:target+'.html',data:data},attr:{id:target}"
         comment "/ko"

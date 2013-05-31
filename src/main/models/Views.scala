@@ -1,6 +1,6 @@
 package models
 
-import kernel.schema._
+import kernel.content._
 
 object Views {
   final val K = kernel.runtime.Views

@@ -53,17 +53,20 @@ main = ->
       Backbone.history.start()
 
 members = ->
-  div "navbar-form","data-bind":"with:member", ->
-    input type:"text",placeholder:"Username","data-bind":"value:name"
-    input type:"text",placeholder:"Email","data-bind":"value:mail"
-    input type:"password",placeholder:"Password","data-bind":"value:decryptedPassword"
-    input "btn",type:"button",value:"Create","data-bind":"click:save"
+  div "table.left.navbar-form", ->
+    div "data-bind":"with:member", ->
+      div -> input type:"text",placeholder:"Username","data-bind":"value:name"
+      div -> input type:"text",placeholder:"Email","data-bind":"value:mail"
+      div -> input type:"password",placeholder:"Password","data-bind":"value:decryptedPassword"
+      div -> input "btn",type:"button",value:"Create","data-bind":"click:save"
 
-  div "table","data-bind":"foreach:members", ->
+    comment "ko foreach:members"
     div ->
       div "data-bind":"text:name"
       div "data-bind":"text:mail"
-      div -> input type:"button",value:"Remove","data-bind":"click:$parent.remove"
+      div ""
+      div -> input "btn",type:"button",value:"Remove","data-bind":"click:$parent.remove"
+    comment "/ko"
 
 this.module =
   inline: [main]

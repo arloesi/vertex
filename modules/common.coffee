@@ -35,6 +35,9 @@ main = -> $ ->
   if typeof this.controller.initialize == "function"
     this.controller.initialize()
 
+this.nbsp = ->
+  text "&nbsp;"
+
 this.menu = ({id,layout,model,format}) ->
   id = "#{id}." if id
 

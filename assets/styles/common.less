@@ -1,4 +1,40 @@
 
+@margin-small:2px;
+
 #content {
   margin-top:32px;
+}
+
+.table.form {
+  > * > * > * {
+    // width:100%;
+  }
+}
+
+.table {
+  > * {
+    > * {
+      > * {
+        margin:@margin-small;
+        margin-top:0;
+        margin-bottom:0;
+      }
+
+      > button {
+        width:100%;
+      }
+    }
+
+    > *:first {
+      * > {
+        margin-left:0;
+      }
+    }
+
+    > *:last {
+      * > {
+        margin-right:0;
+      }
+    }
+  }
 }

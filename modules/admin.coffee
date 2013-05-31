@@ -4,21 +4,21 @@ main = ->
     constructor: ->
       self = this
 
-      $ -> $.services.security.events.authenticated.subscribe ({error,message}) -> self.message message
+      $ -> security.events.authenticated.subscribe ({error,message}) -> self.message message
 
       this.name = ko.observable()
       this.pass = ko.observable()
       this.message = ko.observable()
 
-      this.signin = -> $.services.security.authenticate name:self.name(),pass:self.pass()
+      this.signin = -> security.authenticate name:self.name(),pass:self.pass()
 
   class this.Members
     constructor: (controller) ->
-      detail = $.content.factory.create "/detail/member"
-      simple = $.content.factory.create "/simple/member"
+      detail = content.factory.create "/detail/member"
+      simple = content.factory.create "/simple/member"
 
       model = new detail()
-      collection = new ($.content.collection.extend model:simple,url:"/content/simple/member")
+      collection = new (content.collection.extend model:simple,url:"/content/simple/member")
 
       this.member = new View model, ->
         this.save = ->

@@ -1,5 +1,7 @@
 
 common = ->
+  this.security = services.security
+
   class this.View extends kb.ViewModel
     constructor: (model,ctor) ->
       super model

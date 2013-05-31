@@ -15,9 +15,7 @@
   > * {
     > * {
       > * {
-        margin:@margin-small;
-        margin-top:0;
-        margin-bottom:0;
+        margin:@margin-small !important;
       }
 
       > button {
@@ -27,14 +25,26 @@
 
     > *:first {
       * > {
-        margin-left:0;
+        margin-left:0 !important;
       }
     }
 
     > *:last {
       * > {
-        margin-right:0;
+        margin-right:0 !important;
       }
+    }
+  }
+
+  > *:first {
+    > * > * {
+      margin-top:0 !important;
+    }
+  }
+
+  > *:last {
+    > * > * {
+      margin-bottom:0 !important;
     }
   }
 }

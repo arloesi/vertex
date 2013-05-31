@@ -1,16 +1,19 @@
 
 main = ->
+  message = ko.observable()
+
   class this.SignIn
     constructor: ->
       self = this
 
-      $ -> security.events.authenticated.subscribe ({error,message}) -> self.message message
+      security.events.authenticated.subscribe (params) ->
+        message params.message
 
       this.name = ko.observable()
       this.pass = ko.observable()
-      this.message = ko.observable()
 
-      this.signin = -> security.authenticate name:self.name(),pass:self.pass()
+      this.signin = ->
+        security.authenticate name:self.name(),pass:self.pass()
 
   class this.Members
     constructor: (controller) ->
@@ -31,6 +34,8 @@ main = ->
       this.remove = (i) ->
         model = new simple id:i.id()
         model.destroy success: -> collection.fetch()
+
+      this.message = message
 
       collection.fetch()
 
@@ -67,6 +72,8 @@ members = ->
       div -> div ""
       div -> button "btn",type:"button","data-bind":"click:$parent.remove","Remove"
     comment "/ko"
+  div ->
+    p "data-bind":"text:message"
 
 this.module =
   inline: [main]

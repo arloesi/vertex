@@ -1,0 +1,1 @@
+web: java -Xss1M -Xms512M -Xmx1500M -cp lib/*:. kernel.runtime.Runner

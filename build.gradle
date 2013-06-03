@@ -69,7 +69,7 @@ dependencies {
 }
 
 assets {
-  optimize false
+  optimize true
 }
 
 applicationDistribution.from("$buildDir/assets") {
@@ -79,6 +79,14 @@ applicationDistribution.from("$buildDir/assets") {
 applicationDistribution.from("$buildDir/modules") {
   into "modules"
 }
+
+applicationDistribution.from("$projectDir/config") {
+}
+
+applicationDistribution.from("$projectDir/deploy") {
+}
+
+mainClassName="kernel.runtime.Runner"
 
 
 

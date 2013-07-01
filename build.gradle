@@ -4,7 +4,7 @@ buildscript {
     mavenCentral()
 
     maven {
-      url "file://Users/david/Workspaces/Vertex/maven"
+      url "file://Users/david/Workspaces/Projects/maven"
     }
   }
 
@@ -17,8 +17,8 @@ allprojects {
   apply plugin: "eclipse"
 
   ext {
-    scalaVersion = "2.9.3"
-    testVersion = "2.0.M5b"
+    scalaVersion = "2.10.1"
+    testVersion = "2.0.M6-SNAP26"
     groovyVersion = "2.1.2"
     junitVersion = "4.11"
   }
@@ -49,11 +49,11 @@ apply plugin: "assets"
 apply plugin: "application"
 
 sourceSets {
-	main {
-		scala {
-			srcDirs = ["src/main/scala"]
-		}
-	}
+    main {
+        scala {
+            srcDirs = ["src/main/scala"]
+        }
+    }
 
   test {
     scala {
@@ -73,11 +73,11 @@ dependencies {
 }
 
 assets {
-  optimize true
+  optimize false
 }
 
 applicationDistribution.from("$buildDir/assets") {
-	into "assets"
+    into "assets"
 }
 
 applicationDistribution.from("$buildDir/modules") {

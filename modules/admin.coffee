@@ -65,13 +65,13 @@ members = ->
       div -> input type:"password",placeholder:"Password","data-bind":"value:decryptedPassword"
       div -> button "btn",type:"button","data-bind":"click:save","Create"
 
-    comment "ko foreach:members"
-    div ->
-      div -> div "data-bind":"text:name"
-      div -> div "data-bind":"text:mail"
-      div -> div ""
-      div -> button "btn",type:"button","data-bind":"click:$parent.remove","Remove"
-    comment "/ko"
+    bind "foreach:members", ->
+      div ->
+        div -> div "data-bind":"text:name"
+        div -> div "data-bind":"text:mail"
+        div -> div ""
+        div -> button "btn",type:"button","data-bind":"click:$parent.remove","Remove"
+
   div ->
     p "data-bind":"text:message"
 
@@ -101,6 +101,5 @@ this.module =
 
     content: ->
       div "#content.wrap", "data-bind":"foreach:menu", ->
-        comment "ko if:target==$parent.active()"
-        div "data-bind":"template:{name:target+'.html',data:data},attr:{id:target}"
-        comment "/ko"
+        bind "if:target==$parent.active()", ->
+          div "data-bind":"template:{name:target+'.html',data:data},attr:{id:target}"

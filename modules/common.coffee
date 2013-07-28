@@ -1,4 +1,12 @@
 
+conventions =
+  "/member/detail.name"
+    "label":"Username:&nbsp;"
+
+  "/member/detail.pass"
+    "html":"password"
+    "label":"Password:&nbsp;"
+
 common = ->
   this.security = services.security
 

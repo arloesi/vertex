@@ -17,11 +17,8 @@ main = ->
 
   class this.Members
     constructor: (controller) ->
-      detail = content.factory.create "/detail/member"
-      simple = content.factory.create "/simple/member"
-
-      model = new detail()
-      collection = new (content.collection.extend model:simple,url:"/content/simple/member")
+      model = new content.factory["/member/detail"]
+      collection = new content.factory["/member/detail/collection"]
 
       this.member = new View model, ->
         this.save = ->
@@ -55,6 +52,7 @@ main = ->
       this.active = ko.observable "members"
       this.router = new this.Router()
       this.router.on "route:main", self.active
+
       Backbone.history.start()
 
 members = ->

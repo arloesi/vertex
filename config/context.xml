@@ -55,7 +55,7 @@
         <bean class="kernel.content.Handler">
           <constructor-arg ref="kernel.content.schema"/>
           <constructor-arg ref="kernel.content.mapper"/>
-          <property name="pattern" value="/content/:view/:type/:id|/content/:view/:type|/content"/>
+          <property name="pattern" value="/content/:type/:view/:id|/content/:type/:view|/content"/>
           <property name="method" value="get|put|post|delete"/>
         </bean>
         <bean class="kernel.runtime.Handler">

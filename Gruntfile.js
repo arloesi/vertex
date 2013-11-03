@@ -9,14 +9,18 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         watch: {
-            compass: {
-                files: ['app/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass:server', 'autoprefixer']
-            },
             styles: {
-                files: ['app/styles/{,*/}*.css'],
-                tasks: ['copy:styles', 'autoprefixer']
-            }
+                files: ['app/styles/{,*/}*.{css,less}'],
+                tasks: ['less']
+            },
+            scripts: {
+                files: ['app/scripts/{,*/}*.{js,coffee}'],
+                tasks: []
+            },
+            html: {
+                files: ['app/html/{,*/}*.{html,coffee}'],
+                tasks: ['coffeecup']
+            },
         },
         connect: {
             server: {

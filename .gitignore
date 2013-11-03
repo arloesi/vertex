@@ -4,5 +4,6 @@
 *.log
 *.hprof
 /Makefile
-node_modules
-bower_components
+/dist
+/node_modules
+/app/bower_components

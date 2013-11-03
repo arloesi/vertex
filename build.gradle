@@ -2,14 +2,6 @@
 buildscript {
   repositories {
     mavenCentral()
-
-    maven {
-      url "file://Users/david/Workspaces/Projects/maven"
-    }
-  }
-
-  dependencies {
-    classpath group:"arloesi",name:"assets",version:"0.1"
   }
 }
 
@@ -17,9 +9,8 @@ allprojects {
   apply plugin: "eclipse"
 
   ext {
-    scalaVersion = "2.10.1"
-    testVersion = "2.0.M6-SNAP26"
-    groovyVersion = "2.1.2"
+    scalaVersion = "2.10.2"
+    testVersion = "2.0.RC3"
     junitVersion = "4.11"
   }
 
@@ -28,24 +19,19 @@ allprojects {
 
   eclipse {
       classpath {
-         downloadSources=true
-         downloadJavadoc=true
+         downloadSources true
+         downloadJavadoc true
       }
   }
 
   repositories {
     mavenCentral()
-
-    maven {
-      url "http://download.eclipse.org/rt/eclipselink/maven.repo"
-    }
   }
 }
 
 defaultTasks "installApp"
 
 apply plugin: "scala"
-apply plugin: "assets"
 apply plugin: "application"
 
 sourceSets {
@@ -72,16 +58,12 @@ dependencies {
   compile group:"org.scala-lang", name:"scala-library", version:ext.scalaVersion
 }
 
-assets {
-  optimize false
-}
-
 applicationDistribution.from("$buildDir/assets") {
     into "assets"
 }
 
 applicationDistribution.from("$buildDir/modules") {
-  into "modules"
+    into "modules"
 }
 
 applicationDistribution.from("$projectDir/config") {
@@ -91,7 +73,3 @@ applicationDistribution.from("$projectDir/deploy") {
 }
 
 mainClassName="kernel.runtime.Runner"
-
-
-
-

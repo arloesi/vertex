@@ -2,6 +2,7 @@ package vertex.runtime
 
 import java.util._
 import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 import com.google.inject._
 import com.google.common.collect.Lists._
@@ -20,6 +21,7 @@ class Module extends AbstractModule {
 
     @Provides @Singleton
     def provideServices():List[Service] = {
-        newArrayList()
+        val list:List[Service] = newArrayList()
+        list.map(i => new Service(i))
     }
 }

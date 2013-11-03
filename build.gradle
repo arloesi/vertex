@@ -9,8 +9,7 @@ allprojects {
   apply plugin: "eclipse"
 
   ext {
-    scalaVersion = "2.10.2"
-    testVersion = "2.0.RC3"
+    scalaVersion = "2.10.3"
     junitVersion = "4.11"
   }
 
@@ -72,4 +71,4 @@ applicationDistribution.from("$projectDir/config") {
 applicationDistribution.from("$projectDir/deploy") {
 }
 
-mainClassName="kernel.runtime.Runner"
+mainClassName="vertex.runtime.Runner"

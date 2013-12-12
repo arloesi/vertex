@@ -3,7 +3,6 @@
 /build
 *.log
 *.hprof
-/Makefile
 /dist
-/node_modules
-/app/bower_components
+node_modules
+bower_components

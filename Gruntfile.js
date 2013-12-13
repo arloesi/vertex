@@ -56,24 +56,32 @@ module.exports = function (grunt) {
                 exclude: ['modernizr']
             },
             all: {
-                rjsConfig: 'app/scripts/common.js',
+                rjsConfig: 'app/scripts/config.js',
                 
                 options: {
-                	baseUrl: 'app/scripts'
+                	baseUrl: 'build/assets/scripts'
                 }
             }
+        },
+        coffee: {
+        	compile: {
+	    	    expand: true,
+	    	    flatten: true,
+	    	    src: ['app/scripts/*.coffee'],
+	    	    dest: 'build/assets/coffee',
+	    	    ext: '.js'
+        	}
         },
         requirejs: {
         	compile: {
         		options: {
-        			baseUrl: "app/scripts",
+        			baseUrl: "build/assets/coffee",
         			mainConfigFile: "app/scripts/config.js",
         			dir: "build/assets/scripts",
         			
         			modules: [
-		        		{
-		        			name: "main"
-        				}
+		        		{name: "main"},
+        				{name: "user"}
 		        	]
         		}
         	}
@@ -102,6 +110,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'less',
+        'coffee',
         'requirejs',
         "coffeecup"
     ]);

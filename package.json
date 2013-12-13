@@ -18,6 +18,7 @@
     "grunt-contrib-imagemin": "~0.2.0",
     "grunt-contrib-watch": "~0.5.2",
     "grunt-contrib-less": "*",
+    "grunt-contrib-coffee": "*",
     "grunt-coffeecup": "*",
     "grunt-rev": "~0.1.0",
     "grunt-autoprefixer": "~0.2.0",

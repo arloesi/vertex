@@ -46,9 +46,11 @@ module.exports = function (grunt) {
         },
         coffeecup: {
             main: {
-                files: {
-                    "build/assets/main.html": "app/html/main.coffee",
-                }
+            	expand: true,
+            	cwd: "app/html",
+                src: ["user.coffee","main.coffee"],
+                dest: "build/assets",
+                ext: ".html"
             }
         },
         bower: {
@@ -107,14 +109,11 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
     ]);
-
-    grunt.registerTask('build', [
-        'clean:dist',
-        'less',
-        'coffee',
-        'requirejs',
-        "coffeecup"
-    ]);
+    
+    grunt.registerTask("html", ["coffeecup"]);
+    grunt.registerTask("scripts", ["coffee","requirejs"]);
+    grunt.registerTask("styles", ["less"]);
+    grunt.registerTask('build', ["html", "scripts", "styles"]);
 
     grunt.registerTask('default', [
         'build'

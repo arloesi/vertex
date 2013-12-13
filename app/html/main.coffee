@@ -6,3 +6,4 @@ html ->
 
   body ->
     div "My Content"
+

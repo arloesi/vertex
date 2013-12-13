@@ -80,8 +80,9 @@ module.exports = function (grunt) {
         			dir: "build/assets/scripts",
         			
         			modules: [
-		        		{name: "main"},
-        				{name: "user"}
+			            {name: "common"},
+		        		{name: "main", deps: ["common"]},
+        				{name: "user", deps: ["common"]}
 		        	]
         		}
         	}

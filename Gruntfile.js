@@ -1,10 +1,5 @@
-// Generated on 2013-11-03 using generator-webapp 0.4.3
-'use strict';
-
 module.exports = function (grunt) {
-    // show elapsed time at the end
     require('time-grunt')(grunt);
-    // load all grunt tasks
     require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
@@ -15,7 +10,7 @@ module.exports = function (grunt) {
             },
             scripts: {
                 files: ['app/scripts/{,*/}*.{js,coffee}'],
-                tasks: []
+                tasks: ['requirejs']
             },
             html: {
                 files: ['app/html/{,*/}*.{html,coffee}'],
@@ -34,7 +29,7 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     dot: true,
-                    src: ['dist/*']
+                    src: ['build/assets/*']
                 }]
             },
             server: '.tmp'
@@ -45,14 +40,14 @@ module.exports = function (grunt) {
                     paths: ["app/styles","bower_components/bootstrap/less"]
                 },
                 files: {
-                    "dist/styles/main.css": "app/styles/main.less"
+                    "build/assets/styles/main.css": "app/styles/main.less"
                 }
             }
         },
         coffeecup: {
             main: {
                 files: {
-                    "dist/main.html": "app/html/main.coffee",
+                    "build/assets/main.html": "app/html/main.coffee",
                 }
             }
         },
@@ -61,8 +56,31 @@ module.exports = function (grunt) {
                 exclude: ['modernizr']
             },
             all: {
-                rjsConfig: 'app/scripts/main.js'
+                rjsConfig: 'app/scripts/common.js',
+                
+                options: {
+                	baseUrl: 'app/scripts'
+                }
             }
+        },
+        requirejs: {
+        	compile: {
+        		options: {
+        			baseUrl: "app/scripts",
+        			mainConfigFile: "app/scripts/config.js",
+        			dir: "build/assets/scripts",
+        			
+        			modules: [
+		        		{
+		        			name: "main"
+        				}
+		        	]
+        		}
+        	}
+        },
+        copy: {
+        	main: {
+        	}
         }
     });
 
@@ -84,6 +102,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'less',
+        'requirejs',
         "coffeecup"
     ]);
 

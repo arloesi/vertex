@@ -21,7 +21,7 @@ class Module extends AbstractModule {
 
     @Provides @Singleton
     def provideServices():List[Service] = {
-        val list:List[Service] = newArrayList()
+        val list:List[Service] = Nil
         list.map(i => new Service(i))
     }
 }

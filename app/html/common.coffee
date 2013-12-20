@@ -1,9 +1,16 @@
 
-markup = ({i}) ->
-  doctype 5
+cc = require "coffeecup"
 
-  html ->
-    head ->
-      title -> i.title
+locals =
+  master: (i) ->
+    doctype 5
 
-    body i.body
+    html ->
+      head ->
+        title -> i.title
+
+      body i.body
+
+
+this.markup = (i) ->
+ console.log (cc.render i, hardcode: locals, optimize: false)

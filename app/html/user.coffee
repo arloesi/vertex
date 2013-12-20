@@ -1,8 +1,8 @@
-doctype 5
 
-html ->
-  head ->
-    title "My User Title"
+common = require "./common"
 
-  body ->
-    div "My User Content"
+common.markup ->
+  master
+    title: "User Title"
+    body: ->
+      div "User Content"

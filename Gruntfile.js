@@ -14,7 +14,7 @@ module.exports = function (grunt) {
             },
             html: {
                 files: ['app/html/{,*/}*.{html,coffee}'],
-                tasks: ['coffeecup']
+                tasks: ['html']
             },
         },
         connect: {
@@ -44,13 +44,14 @@ module.exports = function (grunt) {
                 }
             }
         },
-        coffeecup: {
-            main: {
-            	expand: true,
-            	cwd: "app/html",
-                src: ["user.coffee","main.coffee"],
-                dest: "build/assets",
-                ext: ".html"
+        exec: {
+            html: {
+              command:
+                "mkdir -p build/assets/html-unformatted; "+
+                "for i in user main; do "+
+                "coffee app/html/$i.coffee > build/assets/html-unformatted/$i.html"+
+                "; done",
+              stdout: true
             }
         },
         bower: {
@@ -59,39 +60,48 @@ module.exports = function (grunt) {
             },
             all: {
                 rjsConfig: 'app/scripts/config.js',
-                
+
                 options: {
-                	baseUrl: 'build/assets/scripts'
+                  baseUrl: 'build/assets/scripts'
                 }
             }
         },
         coffee: {
-        	compile: {
-	    	    expand: true,
-	    	    flatten: true,
-	    	    src: ['app/scripts/*.coffee'],
-	    	    dest: 'build/assets/coffee',
-	    	    ext: '.js'
-        	}
+          compile: {
+            expand: true,
+            flatten: true,
+            src: ['app/scripts/*.coffee'],
+            dest: 'build/assets/coffee',
+            ext: '.js'
+          }
         },
         requirejs: {
-        	compile: {
-        		options: {
-        			baseUrl: "build/assets/coffee",
-        			mainConfigFile: "app/scripts/config.js",
-        			dir: "build/assets/scripts",
-        			
-        			modules: [
-			            {name: "common"},
-		        		{name: "main", deps: ["common"]},
-        				{name: "user", deps: ["common"]}
-		        	]
-        		}
-        	}
+          compile: {
+            options: {
+              baseUrl: "build/assets/coffee",
+              mainConfigFile: "app/scripts/config.js",
+              dir: "build/assets/scripts",
+
+              modules: [
+                  {name: "common"},
+                {name: "main", deps: ["common"]},
+                {name: "user", deps: ["common"]}
+              ]
+            }
+          }
         },
         copy: {
-        	main: {
-        	}
+          dist: {
+          }
+        },
+        prettify: {
+          all: {
+            expand: true,
+            cwd: 'build/assets/html-unformatted',
+            ext: '.html',
+            src: ['*.html'],
+            dest: 'build/assets/html'
+          }
         }
     });
 
@@ -109,8 +119,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test', [
         'clean:server',
     ]);
-    
-    grunt.registerTask("html", ["coffeecup"]);
+
+    grunt.registerTask("html", ["exec:html","prettify"]);
     grunt.registerTask("scripts", ["coffee","requirejs"]);
     grunt.registerTask("styles", ["less"]);
     grunt.registerTask('build', ["html", "scripts", "styles"]);

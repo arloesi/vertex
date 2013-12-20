@@ -1,24 +1,42 @@
+
+var ROOT = "../../../";
+var BOWER = ROOT + "/bower_components";
+var BOOTSTRAP = BOWER + "/bootstrap";
+
+var prefix = function(i) {
+  var x = {};
+
+  for(var k in i) {
+    x[k] = p + i[k];
+  }
+
+  return x;
+};
+
 require.config({
-    paths: {
-        jquery: '../../../bower_components/jquery/jquery',
-        bootstrapAffix: '../../../bower_components/bootstrap/js/affix',
-        bootstrapAlert: '../../../bower_components/bootstrap/js/alert',
-        bootstrapButton: '../../../bower_components/bootstrap/js/button',
-        bootstrapCarousel: '../../../bower_components/bootstrap/js/carousel',
-        bootstrapCollapse: '../../../bower_components/bootstrap/js/collapse',
-        bootstrapDropdown: '../../../bower_components/bootstrap/js/dropdown',
-        bootstrapModal: '../../../bower_components/bootstrap/js/modal',
-        bootstrapPopover: '../../../bower_components/bootstrap/js/popover',
-        bootstrapScrollspy: '../../../bower_components/bootstrap/js/scrollspy',
-        bootstrapTab: '../../../bower_components/bootstrap/js/tab',
-        bootstrapTooltip: '../../../bower_components/bootstrap/js/tooltip',
-        bootstrapTransition: '../../../bower_components/bootstrap/js/transition',
-        'backbone-relational': '../../../bower_components/backbone-relational/backbone-relational',
-        backbone: '../../../bower_components/backbone/backbone',
-        bootstrap: '../../../bower_components/bootstrap/dist/js/bootstrap',
-        requirejs: '../../../bower_components/requirejs/require',
-        underscore: '../../../bower_components/underscore/underscore',
-        app: '../../../app/scripts'
+    paths: _.extend(
+    prefix(ROOT, {
+      app: "app/scripts"}),
+        prefix(BOWER, {
+          jquery: 'query/jquery',
+        'backbone-relational': 'backbone-relational/backbone-relational',
+          backbone: 'backbone/backbone',
+          bootstrap: 'bootstrap/dist/js/bootstrap',
+          requirejs: 'requirejs/require',
+          underscore: 'underscore/underscore'}),
+        prefix(BOOTSTRAP, {
+          bootstrapAffix: 'bootstrap/js/affix',
+          bootstrapAlert: 'bootstrap/js/alert',
+          bootstrapButton: 'bootstrap/js/button',
+          bootstrapCarousel: 'bootstrap/js/carousel',
+          bootstrapCollapse: 'bootstrap/js/collapse',
+          bootstrapDropdown: 'bootstrap/js/dropdown',
+          bootstrapModal: 'bootstrap/js/modal',
+          bootstrapPopover: 'bootstrap/js/popover',
+          bootstrapScrollspy: 'bootstrap/js/scrollspy',
+          bootstrapTab: 'bootstrap/js/tab',
+          bootstrapTooltip: 'bootstrap/js/tooltip',
+          bootstrapTransition: 'bootstrap/js/transition'}))
     },
     shim: {
         bootstrapAffix: {
@@ -91,9 +109,3 @@ require.config({
     }
 });
 
-require(['jquery'], function (app, $) {
-    'use strict';
-    // use app here
-    // console.log(app);
-    console.log('Running jQuery %s', $().jquery);
-});

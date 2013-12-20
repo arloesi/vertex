@@ -92,6 +92,17 @@ module.exports = function (grunt) {
         },
         copy: {
           dist: {
+            files: [
+                {expand: true, flatten: true,
+                  src: ["build/assets/html/*.html"],
+                  dest: "build/dist/static/html"},
+                {expand: true, flatten: true,
+                  src: ["build/assets/scripts/main.js","build/assets/scripts/user.js"],
+                  dest: "build/dist/static/scripts"},
+                {expand: true, flatten: true,
+                  src: ["build/assets/styles/main.css","build/assets/styles/user.css"],
+                  dest: "build/dist/static/styles"}
+            ]
           }
         },
         prettify: {
@@ -124,8 +135,6 @@ module.exports = function (grunt) {
     grunt.registerTask("scripts", ["coffee","requirejs:compile"]);
     grunt.registerTask("styles", ["less"]);
     grunt.registerTask('build', ["html", "scripts", "styles"]);
-
-    grunt.registerTask('default', [
-        'build'
-    ]);
+    grunt.registerTask("dist", ["build", "copy:dist"])
+    grunt.registerTask('default', ['build']);
 };

@@ -121,7 +121,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask("html", ["exec:html","prettify"]);
-    grunt.registerTask("scripts", ["coffee","requirejs"]);
+    grunt.registerTask("scripts", ["coffee","requirejs:compile"]);
     grunt.registerTask("styles", ["less"]);
     grunt.registerTask('build', ["html", "scripts", "styles"]);
 

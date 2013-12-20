@@ -6,11 +6,11 @@ module.exports = function (grunt) {
         watch: {
             styles: {
                 files: ['app/styles/{,*/}*.{css,less}'],
-                tasks: ['less']
+                tasks: ['styles']
             },
             scripts: {
                 files: ['app/scripts/{,*/}*.{js,coffee}'],
-                tasks: ['requirejs']
+                tasks: ['scripts']
             },
             html: {
                 files: ['app/html/{,*/}*.{html,coffee}'],
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     dot: true,
-                    src: ['build/assets/*']
+                    src: ['build/*']
                 }]
             },
             server: '.tmp'
@@ -47,10 +47,10 @@ module.exports = function (grunt) {
         exec: {
             html: {
               command:
-                "mkdir -p build/assets/html-unformatted; "+
+                "mkdir -p build/assets/html-ugly; "+
                 "for i in user main; do "+
-                "coffee app/html/$i.coffee > build/assets/html-unformatted/$i.html"+
-                "; done",
+                  "coffee app/html/$i.coffee > build/assets/html-ugly/$i.html;"+
+                "done",
               stdout: true
             }
         },
@@ -97,7 +97,7 @@ module.exports = function (grunt) {
         prettify: {
           all: {
             expand: true,
-            cwd: 'build/assets/html-unformatted',
+            cwd: 'build/assets/html-ugly',
             ext: '.html',
             src: ['*.html'],
             dest: 'build/assets/html'

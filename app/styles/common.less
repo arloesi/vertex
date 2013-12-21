@@ -4,7 +4,8 @@
 @window-margin:32px;
 
 html, body {
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
 }
 
 body {
@@ -15,4 +16,8 @@ body {
   position:absolute;
   left:@window-margin;
   right:@window-margin;
+
+  > * {
+    position:relative;
+  }
 }

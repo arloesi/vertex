@@ -54,18 +54,6 @@ module.exports = function (grunt) {
               stdout: true
             }
         },
-        bower: {
-            options: {
-                exclude: ['modernizr']
-            },
-            all: {
-                rjsConfig: 'app/scripts/config.js',
-
-                options: {
-                  baseUrl: 'build/assets/scripts'
-                }
-            }
-        },
         coffee: {
           compile: {
             expand: true,
@@ -75,19 +63,28 @@ module.exports = function (grunt) {
             ext: '.js'
           }
         },
-        requirejs: {
-          compile: {
-            options: {
-              baseUrl: "build/assets/coffee",
-              mainConfigFile: "app/scripts/config.js",
-              dir: "build/assets/scripts",
-
-              modules: [
-                  {name: "common"},
-                {name: "main", deps: ["common"]},
-                {name: "user", deps: ["common"]}
-              ]
-            }
+        concat: {
+          common: {
+            src: [
+              "bower_components/underscore/underscore.js",
+              "bower_components/jquery/jquery.js",
+              "bower_components/bootstrap/js/*.js",
+              "bower_components/backbone/backbone.js",
+              "bower_components/knockout/build/output/knockout-latest.debug.js",
+              "build/assets/coffee/common.js"],
+            dest: "build/assets/scripts/common.js"
+          },
+          main: {
+            src: [
+              "build/assets/scripts/common.js",
+              "build/assets/coffee/main.js"],
+            dest: "build/assets/scripts/main.js"
+          },
+          user: {
+            src: [
+              "build/assets/scripts/common.js",
+              "build/assets/coffee/user.js"],
+            dest: "build/assets/scripts/user.js"
           }
         },
         copy: {
@@ -132,9 +129,9 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask("html", ["exec:html","prettify"]);
-    grunt.registerTask("scripts", ["coffee","requirejs:compile"]);
+    grunt.registerTask("scripts", ["coffee","concat:common","concat:main","concat:user"]);
     grunt.registerTask("styles", ["less"]);
     grunt.registerTask('build', ["html", "scripts", "styles"]);
     grunt.registerTask("dist", ["build", "copy:dist"])
-    grunt.registerTask('default', ['build']);
+    grunt.registerTask('default', ['dist']);
 };

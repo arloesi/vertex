@@ -13,15 +13,26 @@ import org.vertx.java.core.json._
 import org.vertx.java.core.VertxFactory.newVertx
 
 import kernel.network._
+import kernel.network.Handler._
 import kernel.service._
 
-class Module extends AbstractModule {
+class Module(source:String) extends AbstractModule {
     override def configure() {
     }
 
     @Provides @Singleton
     def provideServices():List[Service] = {
-        val list:List[Service] = Nil
-        list.map(i => new Service(i))
+      val list:List[Service] = Nil
+      list.map(i => new Service(i))
+    }
+
+    @Provides @Singleton
+    def provideRouteMatcher(static:Static):RouteMatcher = {
+      val matcher = new RouteMatcher()
+
+      matcher.get("/:page", new Html(source))
+      matcher.getWithRegEx("/static/.*", static)
+
+      matcher
     }
 }

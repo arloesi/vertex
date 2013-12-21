@@ -95,7 +95,7 @@ module.exports = function (grunt) {
             files: [
                 {expand: true, flatten: true,
                   src: ["build/assets/html/*.html"],
-                  dest: "build/dist/static/html"},
+                  dest: "build/dist/html"},
                 {expand: true, flatten: true,
                   src: ["build/assets/scripts/main.js","build/assets/scripts/user.js"],
                   dest: "build/dist/static/scripts"},

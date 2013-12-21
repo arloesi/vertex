@@ -15,4 +15,4 @@ locals =
       body i.body
 
 this.markup = (i) ->
- console.log (cc.render i, hardcode: locals)
+  console.log (cc.render i, hardcode: locals)

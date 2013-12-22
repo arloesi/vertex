@@ -16,7 +16,7 @@ import kernel.network._
 import kernel.network.Handler._
 import kernel.service._
 
-class Module(source:String) extends AbstractModule {
+class Module extends AbstractModule {
     override def configure() {
     }
 
@@ -27,10 +27,10 @@ class Module(source:String) extends AbstractModule {
     }
 
     @Provides @Singleton
-    def provideRouteMatcher(static:Static):RouteMatcher = {
+    def provideRouteMatcher(html:Html, static:Static):RouteMatcher = {
       val matcher = new RouteMatcher()
 
-      matcher.get("/:page", new Html(source))
+      matcher.get("/:page", html)
       matcher.getWithRegEx("/static/.*", static)
 
       matcher

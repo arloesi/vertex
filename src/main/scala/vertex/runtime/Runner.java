@@ -8,7 +8,7 @@ public class Runner {
     public static void main(String [] args) throws Exception {
         final Injector injector = createInjector(
             new Module(), new kernel.runtime.Module(),
-            new kernel.network.Module(8080, "build/dist/static", "/static/"));
+            new kernel.network.Module(8080));
         injector.getInstance(Server.class).run();
     }
 }

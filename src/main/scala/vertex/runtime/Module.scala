@@ -27,6 +27,16 @@ class Module extends AbstractModule {
     }
 
     @Provides @Singleton
+    def provideHtmlHandler():Html = {
+      new Html("build/dist/html/")
+    }
+
+    @Provides @Singleton
+    def provideStaticHandler():Static = {
+      new Static("build/dist/static/","/static")
+    }
+
+    @Provides @Singleton
     def provideRouteMatcher(html:Html, static:Static):RouteMatcher = {
       val matcher = new RouteMatcher()
 

@@ -69,9 +69,9 @@ module.exports = function (grunt) {
             src: [
               "bower_components/underscore/underscore.js",
               "bower_components/jquery/jquery.js",
-              "bower_components/bootstrap/js/*.js",
-              "bower_components/backbone/backbone.js",
-              "bower_components/backbone-relational/backbone-relational.js",
+              // "bower_components/bootstrap/js/*.js",
+              // "bower_components/backbone/backbone.js",
+              // "bower_components/backbone-relational/backbone-relational.js",
               "bower_components/knockout/build/output/knockout-latest.debug.js",
               "build/assets/coffee/common.js"],
             dest: "build/assets/scripts/common.js"

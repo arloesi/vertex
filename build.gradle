@@ -53,8 +53,8 @@ sourceSets {
 
 dependencies {
   compile project(":kernel")
-  scalaTools group:"org.scala-lang", name:"scala-compiler", version:ext.scalaVersion
-  compile group:"org.scala-lang", name:"scala-library", version:ext.scalaVersion
+  scalaTools group:"org.scala-lang", name:"scala-compiler", version:"$scalaVersion"
+  compile group:"org.scala-lang", name:"scala-library", version:"$scalaVersion"
 }
 
 applicationDistribution.from("$buildDir/assets") {

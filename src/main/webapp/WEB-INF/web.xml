@@ -5,10 +5,10 @@
     version="2.5">
     <servlet>
         <servlet-name>Servlet</servlet-name>
-        <servlet-class>vertex.Servlet</servlet-class>
+        <servlet-class>vertex.runtime.Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/servlet</url-pattern>
     </servlet-mapping>
 </web-app>

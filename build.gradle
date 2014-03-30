@@ -33,6 +33,9 @@ defaultTasks "installApp"
 apply plugin: "scala"
 apply plugin: "application"
 
+apply plugin: "war"
+apply plugin: "jetty"
+
 sourceSets {
     main {
         scala {
@@ -55,6 +58,11 @@ dependencies {
   compile project(":kernel")
   scalaTools group:"org.scala-lang", name:"scala-compiler", version:"$scalaVersion"
   compile group:"org.scala-lang", name:"scala-library", version:"$scalaVersion"
+  compile group:"javax.servlet", name:"servlet-api",version:"2.5"
+}
+
+war {
+
 }
 
 applicationDistribution.from("$buildDir/assets") {

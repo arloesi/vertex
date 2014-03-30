@@ -14,7 +14,6 @@ import org.vertx.java.core.VertxFactory.newVertx
 
 import kernel.network._
 import kernel.network.Handler._
-import kernel.service._
 
 class Module extends AbstractModule {
     override def configure() {

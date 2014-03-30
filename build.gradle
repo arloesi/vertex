@@ -57,12 +57,16 @@ dependencies {
   compile group:"org.scala-lang", name:"scala-library", version:"$scalaVersion"
 }
 
-applicationDistribution.from("$buildDir/assets") {
-    into "assets"
+applicationDistribution.from("$buildDir/assets/html") {
+  into "assets/html"
 }
 
-applicationDistribution.from("$buildDir/modules") {
-    into "modules"
+applicationDistribution.from("$buildDir/assets/scripts") {
+  into "assets/scripts"
+}
+
+applicationDistribution.from("$buildDir/assets/styles") {
+  into "assets/styles"
 }
 
 applicationDistribution.from("$projectDir/config") {
